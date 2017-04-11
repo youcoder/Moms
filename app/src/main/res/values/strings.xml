@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">MOMS</string>
+    <string name="action_settings">Settings</string>
+    <string name="show_cards_dialog">Show Cards Dialog</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="password_2">PASSWORD</string>
+    <string name="new_password">NEW PASSWORD</string>
+    <string name="confirm_password">Confirmation Password</string>
+    <string name="done">Done</string>
+    <string name="change_password_2">Change Password</string>
+    <string name="login">LOG IN</string>
+    <string name="find_account">"Don't have an account?"</string>
+    <string name="signup">Sign up</string>
+    <string name="recover_password">Recover Password</string>
+    <string name="help_set">SET</string>
+    <string name="help_reps">REPS</string>
+    <string name="help_time">TIME</string>
+    <string name="help_rest">REST</string>
+    <string name="starting_position">Starting position</string>
+    <string name="movement">Movment</string>
+    <string name="points_to_remember">Points to remember</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_to_one_workout">Add to one workout</string>
+    <string name="new_workout">New workout</string>
+    <string name="training_schema">Training Schemas</string>
+    <string name="categories">Categories</string>
+    <string name="change_password">CHANGE PASSWORD</string>
+    <string name="disclaimer">DISCLAIMER</string>
+    <string name="logout">LOGOUT</string>
+    <string name="language">LANGUAGE</string>
+    <string name="lang_english">English</string>
+    <string name="lang_dutch">Dutch</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="birthday">Birthday</string>
+    <string name="gender">Gender</string>
+    <string name="optional">optional</string>
+    <string name="female">female</string>
+    <string name="male">male</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="trainning_exercise">Trainning Exercise</string>
+    <string name="beginner">beginner</string>
+    <string name="intermediate">intermediate</string>
+    <string name="advanced">advanced</string>
+    <string name="disclamier_content">Although the contents of this app have been put together with the greatest care, there may be some inaccuracies or the content may be incomplete. The makers cannot be held liable for any damage arsing from this. If there is any doubt about the normality of a particular compliant, the makers advise you yo contact a midwife or doctor.</string>
+    <string name="accept">I have read and accepted</string>
+    <string name="continues">CONTINUE</string>
+    <string name="setting_key">SodaSetting</string>
+    <string name="setting_name">UserName</string>
+    <string name="setting_id">UserId</string>
+    <string name="setting_token">UserToken</string>
+
+
+    <string name="error_null_email">Please enter your email address.</string>
+    <string name="error_null_password">Please enter your password.</string>
+    <string name="error_failed_connect">Failed connect to server.</string>
+    <string name="wait">Please Wait...</string>
+
+    <string-array name="title_category">
+        <item>FAVOURITES</item>
+        <item>MY WORKOUTS</item>
+        <item>WORMING-UP</item>
+        <item>WORKOUTS</item>
+        <item>YOGA</item>
+        <item>STRECHING</item>
+        <item>BACK IN SHAPE</item>
+        <item>REHAVILIATION <![CDATA["&"]]> PREVENTION</item>
+    </string-array>
+
+</resources>

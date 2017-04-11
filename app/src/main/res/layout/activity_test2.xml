@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_test2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.sodabodyfit.moms.TestActivity">
+
+
+
+    <LinearLayout
+        android:id="@+id/play_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="100" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/photo_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="45" >
+
+        </android.support.v4.view.ViewPager>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="55" >
+            <ScrollView
+                android:id="@+id/sv_help"
+                android:layout_width="match_parent"
+                android:scrollbars="vertical"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Gymstick hip shoulder rotation, mobility"
+                        android:textSize="25sp"
+                        android:gravity="center"
+                        android:textColor="@color/colorRed"
+                        android:layout_marginBottom="10dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:weightSum="100" >
+                        <TextView
+                            android:id="@+id/label_set"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="25"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorBlack"
+                            android:text="@string/help_set"/>
+                        <TextView
+                            android:id="@+id/label_reps"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="25"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorBlack"
+                            android:text="@string/help_reps"/>
+                        <TextView
+                            android:id="@+id/label_tiem"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="25"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorBlack"
+                            android:text="@string/help_time"/>
+                        <TextView
+                            android:id="@+id/label_rest"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="25"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorBlack"
+                            android:text="@string/help_rest"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:weightSum="100" >
+                        <TextView
+                            android:id="@+id/tv_set"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="25"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorRed"
+                            android:text="1"/>
+                        <TextView
+                            android:id="@+id/tv_reps"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="25"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorRed"
+                            android:text="10"/>
+                        <TextView
+                            android:id="@+id/tv_time"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="25"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorRed"
+                            android:text="0 sec"/>
+                        <TextView
+                            android:id="@+id/tv_rest"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="25"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorRed"
+                            android:text="10 sec"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorDetailItem"
+                        android:layout_marginBottom="20dp" />
+
+                    <TextView
+                        android:id="@+id/label_starting_position"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/starting_position"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_starting_position"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="14sp"
+                        android:text="Stand up straight and place your feet a little wider apart than shoulder-eidth. Grasp the gymstick as wide apart as possible with your arms in the air." />
+
+                    <TextView
+                        android:id="@+id/label_movement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/movement"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tv_movment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="14sp"
+                        android:text="Rotate the upper part of your body from left to right while holding the gumstick widthways high above your head. Every time you turn in, move your foot in the same drirection." />
+
+                    <TextView
+                        android:id="@+id/label_points_remember"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/points_to_remember"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tv_points_remember"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="14sp"
+                        android:text="Contract your abdominal muscles, keep your arms streched and turn your head in the same directions as your movement." />
+                </LinearLayout>
+
+            </ScrollView>
+            <com.sodabodyfit.moms.Common.DrawView
+                android:id="@+id/draw_panel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="100" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:gravity="center_vertical" >
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/back_icon" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="60"
+                android:text="Gymstick"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"/>
+            <ImageView
+                android:id="@+id/btn_alarm"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/alarm_icon" />
+            <ImageView
+                android:id="@+id/btn_favourites"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/favourites_icon" />
+            <ImageView
+                android:id="@+id/btn_plus"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/plus_icon" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="33" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6" >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:background="@drawable/round_boarder_bg" >
+                <ImageView
+                    android:id="@+id/btn_redraw"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/play_icon"
+                    />
+                <LinearLayout
+                    android:id="@+id/viewPagerCountDots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical" >
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</FrameLayout>

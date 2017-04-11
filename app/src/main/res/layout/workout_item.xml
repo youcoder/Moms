@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_margin="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:gravity="center_vertical" >
+
+    <ImageView
+        android:id="@+id/iv_workout_picture"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/boxing"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/tv_workout_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:text="text_test"
+        android:textSize="16sp" />
+
+</LinearLayout>

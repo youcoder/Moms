@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorHint">#FFFFFF</color>
+    <color name="colorButtonBg">#FF603F</color>
+    <color name="colorButtonFore">#FFFFFF</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorDetailItem">#234E66</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBlueBalck">#234E66</color>
+    <color name="colorDotSelect">#FF603F</color>
+    <color name="colorDotNonSelect">#95a5a6</color>
+    <color name="colorNumber">#565656</color>
+    <color name="colorGray">#f8f8f8</color>
+    <color name="colorNavMenu">#1c3846</color>
+    <color name="pink">#FF4081</color>
+    <color name="transparent">#00000000</color>
+    <color name="dialog_background">#4b7181</color>
+    <color name="colorText">#8D98AD</color>
+    <color name="colorSepLine">#CCCCCC</color>
+    <color name="actionbar_title">#1C3640</color>
+</resources>
