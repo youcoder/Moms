@@ -25,7 +25,6 @@ import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity{
 
-    //    private ObjectAnimator m_AnimationTitle;
     private String email;
     private String password;
     private EditText etEmail;
