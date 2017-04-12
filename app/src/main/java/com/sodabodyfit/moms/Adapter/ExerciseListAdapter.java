@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sodabodyfit.moms.Common.Constants;
+import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.ExerciseActivity;
 import com.sodabodyfit.moms.ExerciseListActivity;
 import com.sodabodyfit.moms.Interface.ImageAPI;
@@ -72,7 +73,7 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
 
         String[] imageIds = item.images.split(",");
         if(imageIds.length > 0)
-            LoadImage(holder.ivExercise, imageIds[0]);
+            ImageLoader.LoadImage(context, holder.ivExercise, imageIds[0]);
 
         holder.ivExercise.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,95 +86,7 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
         });
     }
 
-    public void LoadImage(final ImageView imageView, String imageId)
-    {
-        DBEngine dbEngine = new DBEngine(context);
-        Image imageInfo = dbEngine.getImageInfo(imageId);
 
-        if(imageInfo.isInAssets)
-        {
-            Bitmap bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + File.separator + imageInfo.name + ".png");
-            imageView.setImageBitmap(bMap);
-        }
-        else
-        {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(Constants.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            ImageAPI service = retrofit.create(ImageAPI.class);
-
-            Call<ResponseBody> call = service.getImageRequest("Token token=Z6VXst4ia9f3ayUwrTDVgypT", imageInfo.name);
-
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    try {
-
-                        Log.d("onResponse", "Response came from server");
-
-                        String imageName = response.raw().request().url().queryParameterValue(0);
-                        boolean bSuccess = DownloadImage(response.body(), imageView, imageName);
-
-                        Log.d("onResponse", "Image is downloaded and saved ? " + bSuccess);
-
-                    } catch (Exception e) {
-                        Log.d("onResponse", "There is an error");
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.d("onFailure", t.toString());
-                }
-            });
-        }
-    }
-
-    private boolean DownloadImage(ResponseBody body, ImageView imageView, String fileName) {
-
-        try {
-            Log.d("DownloadImage", "Reading and writing file");
-            InputStream in = null;
-            FileOutputStream out = null;
-
-            try {
-                in = body.byteStream();
-                out = new FileOutputStream(Environment.getExternalStorageDirectory() + File.separator + fileName + ".png");
-                int c;
-
-                while ((c = in.read()) != -1) {
-                    out.write(c);
-                }
-            }
-            catch (IOException e) {
-                Log.d("DownloadImage",e.toString());
-                return false;
-            }
-            finally {
-                if (in != null) {
-                    in.close();
-                }
-                if (out != null) {
-                    out.close();
-                }
-            }
-
-            Bitmap bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + File.separator + fileName + ".png");
-            imageView.setImageBitmap(bMap);
-
-            DBEngine dbEngine = new DBEngine(context);
-            dbEngine.updateImageInAssets(fileName);
-
-            return true;
-
-        } catch (IOException e) {
-            Log.d("DownloadImage",e.toString());
-            return false;
-        }
-    }
 
     @Override
     public int getItemCount() {
