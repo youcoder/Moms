@@ -50,7 +50,7 @@ public class ImageLoader {
 
             ImageAPI service = retrofit.create(ImageAPI.class);
 
-            Call<ResponseBody> call = service.getImageRequest("Token token=Z6VXst4ia9f3ayUwrTDVgypT", imageInfo.name);
+            Call<ResponseBody> call = service.getImageRequest("Token token=" + UserInfo.token, imageInfo.name);
 
             call.enqueue(new Callback<ResponseBody>() {
                 @Override

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sodabodyfit.moms.Common.Constants;
+import com.sodabodyfit.moms.Common.UserInfo;
 import com.sodabodyfit.moms.Interface.ChangePassword;
 import com.sodabodyfit.moms.Interface.RecoveryPassword;
 
@@ -87,7 +88,7 @@ public class PasswordActivity extends Activity implements View.OnClickListener {
 
         ChangePassword service = retrofit.create(ChangePassword.class);
 
-        Call<Object> call = service.sendChangePasswordRequest("Token token=MtGLTpFQz5z9bp1NnmQoxbM3", oldPwd, newPwd);
+        Call<Object> call = service.sendChangePasswordRequest("Token token=" + UserInfo.token, oldPwd, newPwd);
         call.enqueue(new Callback<Object>() {
 
             @Override
