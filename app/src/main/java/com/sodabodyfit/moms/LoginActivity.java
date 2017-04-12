@@ -50,12 +50,9 @@ public class LoginActivity extends AppCompatActivity{
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (validate()) {
-//                    login();
-//                }
-
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
+                if (validate()) {
+                    login();
+                }
             }
         });
 
@@ -83,11 +80,6 @@ public class LoginActivity extends AppCompatActivity{
 
         etEmail = (EditText)findViewById(R.id.edt_email);
         etPassword = (EditText)findViewById(R.id.edt_password);
-
-//        int nHeight = Utils.GetDisplayHeight(this);
-//        m_AnimationTitle = ObjectAnimator.ofFloat(ivLogo, View.TRANSLATION_Y, -(nHeight-300));
-//        m_AnimationTitle.setDuration(1000);
-//        m_AnimationTitle.start();
 
     }
 
@@ -141,6 +133,7 @@ public class LoginActivity extends AppCompatActivity{
                     UserInfo obj = response.body();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+                    LoginActivity.this.finish();
                 }
             }
 

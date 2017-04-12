@@ -2,9 +2,9 @@ package com.sodabodyfit.moms.Common;
 
 public class UserInfo {
 
-	public String token;
-	public String id;
-	public String name;
+	public static String token;
+	public static String id;
+	public static String name;
 
 	public UserInfo(){
 
