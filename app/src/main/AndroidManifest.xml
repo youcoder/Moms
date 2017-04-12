@@ -46,6 +46,10 @@
             android:theme="@style/AppThemeNoTitle"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".SchemasActivity"
+            android:theme="@style/AppThemeNoTitle"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ExerciseActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -53,9 +57,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".PlusActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SchemasActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".PasswordActivity"
