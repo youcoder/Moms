@@ -14,7 +14,7 @@ public class Exercise implements Parcelable {
 
     // table columns names
     public static final String KEY_ID = "id";
-    public static final String KEY_category = "category_id";
+//    public static final String KEY_category = "category_id";
     public static final String KEY_workout = "workout_id";
     public static final String KEY_title = "title";
     public static final String KEY_title_dut = "title_dut";
@@ -34,7 +34,7 @@ public class Exercise implements Parcelable {
 
     // property
     public int exercise_id;
-    public int category_id;
+//    public int category_id;
     public int workout_id;
     public String title;
     public String initialPosition;
@@ -56,7 +56,7 @@ public class Exercise implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.exercise_id);
-        dest.writeInt(this.category_id);
+//        dest.writeInt(this.category_id);
         dest.writeInt(this.workout_id);
         dest.writeString(this.title);
         dest.writeString(this.initialPosition);
@@ -76,7 +76,7 @@ public class Exercise implements Parcelable {
 
     protected Exercise(Parcel in) {
         this.exercise_id = in.readInt();
-        this.category_id = in.readInt();
+//        this.category_id = in.readInt();
         this.workout_id = in.readInt();
         this.title = in.readString();
         this.initialPosition = in.readString();

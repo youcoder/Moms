@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.sodabodyfit.moms.Adapter.ExerciseListAdapter;
 import com.sodabodyfit.moms.Models.Exercise;
+import com.sodabodyfit.moms.Provider.DBEngine;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,9 @@ public class ExerciseListActivity extends AppCompatActivity {
 
         TextView tvTitle = (TextView)findViewById(R.id.txt_title);
         tvTitle.setText(title);
+
+        DBEngine dbEngine = new DBEngine(this);
+        lstExercise = dbEngine.getExerciseList(workoutId);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
