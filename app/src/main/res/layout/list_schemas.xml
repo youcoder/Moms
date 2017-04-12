@@ -15,7 +15,8 @@
         android:text="Movment preparation leg hip strech, upper body rotation"
         android:textSize="18sp"
         android:gravity="center"
-        android:textColor="@color/colorDetailItem" />
+        android:textColor="@color/colorDetailItem"
+        android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
