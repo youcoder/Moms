@@ -9,5 +9,6 @@ public class Constants {
     public final static String SIGNUP_PAGE = "/api/v1/user";
     public final static String LOGIN_PAGE = "/api/v1/session";
     public final static String RECOVERY_PASSWORD_PAGE = "/api/v1/user/password_resets";
+    public final static String CHANGE_PASSWORD_PAGE = "/api/v1/user";
     public final static String IMAGE_PAGE = "/api/v1/image";
 }
