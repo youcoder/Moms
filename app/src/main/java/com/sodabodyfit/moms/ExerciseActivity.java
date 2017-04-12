@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sodabodyfit.moms.Common.DrawView;
+import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.Models.Exercise;
 import com.sodabodyfit.moms.Provider.DBEngine;
 
@@ -112,16 +113,19 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
         m_RestTime = Integer.parseInt(exercise.rest);
 
-        ivPlay = (ImageView)findViewById(R.id.btn_play);
+        ivPlay = (ImageView)findViewById(R.id.img_play);
         ivPlay.setOnClickListener(this);
 
-        ivExercise = (ImageView)findViewById(R.id.btn_alarm);
+        ivExercise = (ImageView)findViewById(R.id.img_exercise);
         ivExercise.setOnClickListener(this);
         
-        ivFavourite = (ImageView) findViewById(R.id.btn_favourites);
+        ivFavourite = (ImageView)findViewById(R.id.img_favourite);
         ivFavourite.setOnClickListener(this);
 
-        m_isFavourite = dbEngine.isFavourite(m_nExerciseId);
+        ImageView ivPlus = (ImageView)findViewById(R.id.img_plus);
+        ivPlus.setOnClickListener(this);
+
+        m_isFavourite = exercise.like;
 
         if(m_isFavourite)
             ivFavourite.setImageResource(R.drawable.ic_vote);
@@ -152,10 +156,10 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         });
 
         int[] photoList = {R.drawable.p_1_1_0, R.drawable.p_1_1_1, R.drawable.p_1_1_2};
-        adapter = new ViewPagerAdapter(this, photoList);
-        photoViewPager.setAdapter(adapter);
-        pageIndicator = (LinearLayout)findViewById(R.id.viewPagerCountDots);
-        setUiPageViewController();
+//        adapter = new ViewPagerAdapter(this, photoList);
+//        photoViewPager.setAdapter(adapter);
+//        pageIndicator = (LinearLayout)findViewById(R.id.viewPagerCountDots);
+//        setUiPageViewController();
 
         //ViewPager auto play animation
         m_PlayRunnable = new Runnable() {
@@ -290,16 +294,16 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btn_back:
                 onBackPressed();
                 break;
-            case R.id.btn_play:
+            case R.id.img_play:
                 onClickPlay();
                 break;
-            case R.id.btn_alarm:
+            case R.id.img_exercise:
                 onClickAlarm();
                 break;
-            case R.id.btn_favourites:
+            case R.id.img_favourite:
                 onClickFavourite();
                 break;
-            case R.id.btn_plus:
+            case R.id.img_plus:
                 onClickPlus();
                 break;
         }
@@ -392,14 +396,16 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
 
-            View itemView = LayoutInflater.from(mContext).inflate(R.layout.help_photo, container, false);
+            View itemView = LayoutInflater.from(mContext).inflate(R.layout.exercise_photo, container, false);
 
             DBEngine dbEngine = new DBEngine(mContext);
             Exercise exercise = dbEngine.getExerciseInfo(m_nExerciseId);
 
+            ImageView imageView = (ImageView)itemView.findViewById(R.id.img_photo);
+
             String[] imageIds = exercise.images.split(",");
             if(imageIds.length > 0)
-                LoadImage(itemView, imageIds[0]);
+                ImageLoader.LoadImage(mContext, imageView, imageIds[0]);
 
             container.addView(itemView);
             return itemView;
