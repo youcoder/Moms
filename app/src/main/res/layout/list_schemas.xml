@@ -2,76 +2,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="5dp">
 
     <TextView
-        android:id="@+id/schema_content"
+        android:id="@+id/txt_schema_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
         android:text="Movment preparation leg hip strech, upper body rotation"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:gravity="center"
-        android:textColor="@color/colorDetailItem"
-        android:layout_margin="10dp" />
+        android:textColor="@color/colorDetailItem" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="7dp"
         android:weightSum="100" >
+
         <TextView
-            android:id="@+id/tv_set_label_schema"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:layout_height="wrap_content"
             android:text="@string/help_set"
             android:gravity="center"
             android:textSize="14sp" />
+
         <TextView
-            android:id="@+id/tv_reps_label_schema"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:layout_height="wrap_content"
             android:text="@string/help_reps"
             android:gravity="center"
             android:textSize="14sp" />
+
         <TextView
-            android:id="@+id/tv_time_label_schema"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:layout_height="wrap_content"
             android:text="@string/help_time"
             android:gravity="center"
             android:textSize="14sp" />
+
         <TextView
-            android:id="@+id/tv_rest_label_schema"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:layout_height="wrap_content"
             android:text="REST"
             android:gravity="center"
             android:textSize="14sp" />
+
         <TextView
-            android:id="@+id/tv_kg_label_schema"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:layout_height="wrap_content"
             android:text="KG"
             android:gravity="center"
             android:textSize="14sp" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
         android:weightSum="100" >
+
         <TextView
-            android:id="@+id/tv_set_schema"
+            android:id="@+id/txt_set_schema"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:layout_height="wrap_content"
@@ -79,8 +81,9 @@
             android:gravity="center"
             android:textColor="@color/colorDotSelect"
             android:textSize="14sp" />
+
         <TextView
-            android:id="@+id/tv_reps_schema"
+            android:id="@+id/txt_reps_schema"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:layout_height="wrap_content"
@@ -88,8 +91,9 @@
             android:gravity="center"
             android:textColor="@color/colorDotSelect"
             android:textSize="14sp" />
+
         <TextView
-            android:id="@+id/tv_time_schema"
+            android:id="@+id/txt_time_schema"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:layout_height="wrap_content"
@@ -97,8 +101,9 @@
             android:gravity="center"
             android:textColor="@color/colorDotSelect"
             android:textSize="14sp" />
+
         <TextView
-            android:id="@+id/tv_rest_schema"
+            android:id="@+id/txt_rest_schema"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:layout_height="wrap_content"
@@ -106,8 +111,9 @@
             android:gravity="center"
             android:textColor="@color/colorDotSelect"
             android:textSize="14sp" />
+
         <TextView
-            android:id="@+id/tv_kg_schema"
+            android:id="@+id/txt_kg_schema"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:layout_height="wrap_content"
@@ -115,6 +121,7 @@
             android:gravity="center"
             android:textColor="@color/colorDotSelect"
             android:textSize="14sp" />
+
     </LinearLayout>
 
 </LinearLayout>

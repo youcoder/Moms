@@ -41,7 +41,7 @@ public class SchemasActivity extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        Typeface m_TypeFace = Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf");
+        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf");
         
         Intent intent = getIntent();
         int workoutId = intent.getIntExtra("workout_id", -1);
@@ -56,7 +56,7 @@ public class SchemasActivity extends AppCompatActivity {
 //        }
 
         TextView tv_Schemas = (TextView)findViewById(R.id.txt_schemas_label);
-        tv_Schemas.setTypeface(m_TypeFace);
+        tv_Schemas.setTypeface(typeFace);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -64,7 +64,7 @@ public class SchemasActivity extends AppCompatActivity {
         recycler.setLayoutManager(layoutManager);
         recycler.addItemDecoration(new DividerItemDecoration(this));
 
-        SchemasAdapter adapter = new SchemasAdapter(SchemasActivity.this, lstExercise);
+        SchemasAdapter adapter = new SchemasAdapter(SchemasActivity.this, lstExercise, typeFace);
         recycler.setAdapter(adapter);
     }
 
