@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/mom_d1"
+                    android:src="@drawable/loading"
                     android:fitsSystemWindows="true"
                     app:layout_collapseMode="parallax"/>
 

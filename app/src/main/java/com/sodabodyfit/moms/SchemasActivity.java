@@ -1,6 +1,5 @@
 package com.sodabodyfit.moms;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,25 +8,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sodabodyfit.moms.Adapter.SchemasAdapter;
 import com.sodabodyfit.moms.Common.DividerItemDecoration;
+import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.Models.Exercise;
 import com.sodabodyfit.moms.Models.Workout;
 import com.sodabodyfit.moms.Provider.DBEngine;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SchemasActivity extends AppCompatActivity {
 
@@ -47,13 +42,18 @@ public class SchemasActivity extends AppCompatActivity {
         int workoutId = intent.getIntExtra("workout_id", -1);
         ArrayList<Exercise> lstExercise = intent.getParcelableArrayListExtra("exercise");
 
-//        LoadImage(workout.image);
+        DBEngine dbEngine = new DBEngine(this);
+        Workout workout = dbEngine.getWorkoutInfo(workoutId);
+
+        ImageView imageView = (ImageView) findViewById(R.id.img_category);
+        ImageLoader.LoadImage(this, imageView, workout.image);
+
         LinearLayout llSchemasInfo = (LinearLayout) findViewById(R.id.ll_schemas_info);
         TextView tvSchemasInfo = (TextView) findViewById(R.id.txt_schemas_info);
-//        if(workout.infoDisplayed) {
-//            tvSchemasInfo.setText(workout.info);
-//            llSchemasInfo.setVisibility(View.VISIBLE);
-//        }
+        if(workout.infoDisplayed) {
+            tvSchemasInfo.setText(workout.info);
+            llSchemasInfo.setVisibility(View.VISIBLE);
+        }
 
         TextView tv_Schemas = (TextView)findViewById(R.id.txt_schemas_label);
         tv_Schemas.setTypeface(m_TypeFace);

@@ -237,23 +237,51 @@ public class DBEngine {
         if(getSelLanguageId() == 1) //english
         {
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            String selectQuery =  "SELECT  " +
-                    Exercise.KEY_ID + "," +
-                    Exercise.KEY_title + "," +
-                    Exercise.KEY_initialPosition + "," +
-                    Exercise.KEY_movement + "," +
-                    Exercise.KEY_points + "," +
-                    Exercise.KEY_sets + "," +
-                    Exercise.KEY_repetions + "," +
-                    Exercise.KEY_times + "," +
-                    Exercise.KEY_rest + "," +
-                    Exercise.KEY_kg + "," +
-                    Exercise.KEY_like + "," +
-                    Exercise.KEY_images +
-                    " FROM " + Exercise.TABLE +
-                    " WHERE " + Exercise.KEY_workout + "=?";
+            String selectQuery = "";
+            String[] whereParams = null;
 
-            Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(workout_id) });
+            if(workout_id == 0) // Favourite
+            {
+                selectQuery =  "SELECT  " +
+                        Exercise.KEY_ID + "," +
+                        Exercise.KEY_title + "," +
+                        Exercise.KEY_initialPosition + "," +
+                        Exercise.KEY_movement + "," +
+                        Exercise.KEY_points + "," +
+                        Exercise.KEY_sets + "," +
+                        Exercise.KEY_repetions + "," +
+                        Exercise.KEY_times + "," +
+                        Exercise.KEY_rest + "," +
+                        Exercise.KEY_kg + "," +
+                        Exercise.KEY_like + "," +
+                        Exercise.KEY_images +
+                        " FROM " + Exercise.TABLE +
+                        " WHERE " + Exercise.KEY_like + "=1";
+
+                whereParams = null;
+            }
+            else
+            {
+                selectQuery =  "SELECT  " +
+                        Exercise.KEY_ID + "," +
+                        Exercise.KEY_title + "," +
+                        Exercise.KEY_initialPosition + "," +
+                        Exercise.KEY_movement + "," +
+                        Exercise.KEY_points + "," +
+                        Exercise.KEY_sets + "," +
+                        Exercise.KEY_repetions + "," +
+                        Exercise.KEY_times + "," +
+                        Exercise.KEY_rest + "," +
+                        Exercise.KEY_kg + "," +
+                        Exercise.KEY_like + "," +
+                        Exercise.KEY_images +
+                        " FROM " + Exercise.TABLE +
+                        " WHERE " + Exercise.KEY_workout + "=?";
+
+                whereParams = new String[] { String.valueOf(workout_id) };
+            }
+
+            Cursor cursor = db.rawQuery(selectQuery, whereParams);
 
             if (cursor.moveToFirst()) {
                 do {
@@ -284,22 +312,51 @@ public class DBEngine {
         else
         {
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            String selectQuery =  "SELECT  " +
-                    Exercise.KEY_ID + "," +
-                    Exercise.KEY_title_dut + "," +
-                    Exercise.KEY_initialPosition_dut + "," +
-                    Exercise.KEY_movement_dut + "," +
-                    Exercise.KEY_points_dut + "," +
-                    Exercise.KEY_sets + "," +
-                    Exercise.KEY_repetions + "," +
-                    Exercise.KEY_times + "," +
-                    Exercise.KEY_rest + "," +
-                    Exercise.KEY_kg + "," +
-                    Exercise.KEY_images +
-                    " FROM " + Exercise.TABLE +
-                    " WHERE " + Exercise.KEY_workout + "=?";
+            String selectQuery = "";
+            String[] whereParams = null;
 
-            Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(workout_id) });
+            if(workout_id == 0) // Favourite
+            {
+                selectQuery =  "SELECT  " +
+                        Exercise.KEY_ID + "," +
+                        Exercise.KEY_title_dut + "," +
+                        Exercise.KEY_initialPosition_dut + "," +
+                        Exercise.KEY_movement_dut + "," +
+                        Exercise.KEY_points_dut + "," +
+                        Exercise.KEY_sets + "," +
+                        Exercise.KEY_repetions + "," +
+                        Exercise.KEY_times + "," +
+                        Exercise.KEY_rest + "," +
+                        Exercise.KEY_kg + "," +
+                        Exercise.KEY_like + "," +
+                        Exercise.KEY_images +
+                        " FROM " + Exercise.TABLE +
+                        " WHERE " + Exercise.KEY_like + "=true";
+
+                whereParams = null;
+            }
+            else
+            {
+                selectQuery =  "SELECT  " +
+                        Exercise.KEY_ID + "," +
+                        Exercise.KEY_title_dut + "," +
+                        Exercise.KEY_initialPosition_dut + "," +
+                        Exercise.KEY_movement_dut + "," +
+                        Exercise.KEY_points_dut + "," +
+                        Exercise.KEY_sets + "," +
+                        Exercise.KEY_repetions + "," +
+                        Exercise.KEY_times + "," +
+                        Exercise.KEY_rest + "," +
+                        Exercise.KEY_kg + "," +
+                        Exercise.KEY_like + "," +
+                        Exercise.KEY_images +
+                        " FROM " + Exercise.TABLE +
+                        " WHERE " + Exercise.KEY_workout + "=?";
+
+                whereParams = new String[] { String.valueOf(workout_id) };
+            }
+
+            Cursor cursor = db.rawQuery(selectQuery, whereParams);
 
             if (cursor.moveToFirst()) {
                 do {
@@ -480,107 +537,6 @@ public class DBEngine {
     }
 
     // Favourite
-    public ArrayList<Exercise> getFavourList() {
-        ArrayList<Exercise> exerciseList = new ArrayList<Exercise>();
-
-        if(getSelLanguageId() == 1) //english
-        {
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
-            String selectQuery =  "SELECT  " +
-                    Exercise.KEY_ID + "," +
-                    Exercise.KEY_title + "," +
-                    Exercise.KEY_initialPosition + "," +
-                    Exercise.KEY_movement + "," +
-                    Exercise.KEY_points + "," +
-                    Exercise.KEY_sets + "," +
-                    Exercise.KEY_repetions + "," +
-                    Exercise.KEY_times + "," +
-                    Exercise.KEY_rest + "," +
-                    Exercise.KEY_kg + "," +
-                    Exercise.KEY_like + "," +
-                    Exercise.KEY_images +
-                    " FROM " + Exercise.TABLE +
-                    " WHERE " + Exercise.KEY_like + "=true";
-
-            Cursor cursor = db.rawQuery(selectQuery, null);
-
-            if (cursor.moveToFirst()) {
-                do {
-                    Exercise exercise = new Exercise();
-                    exercise.exercise_id = cursor.getInt(cursor.getColumnIndex(Exercise.KEY_ID));
-                    exercise.workout_id = 0;    // Favourite
-                    exercise.title = cursor.getString(cursor.getColumnIndex(Exercise.KEY_title));
-                    exercise.initialPosition = cursor.getString(cursor.getColumnIndex(Exercise.KEY_initialPosition));
-                    exercise.movement = cursor.getString(cursor.getColumnIndex(Exercise.KEY_movement));
-                    exercise.points = cursor.getString(cursor.getColumnIndex(Exercise.KEY_points));
-                    exercise.sets = cursor.getString(cursor.getColumnIndex(Exercise.KEY_sets));
-                    exercise.repetions = cursor.getString(cursor.getColumnIndex(Exercise.KEY_repetions));
-                    exercise.times = cursor.getString(cursor.getColumnIndex(Exercise.KEY_times));
-                    exercise.rest = cursor.getString(cursor.getColumnIndex(Exercise.KEY_rest));
-                    String temp = cursor.getString(cursor.getColumnIndex(Exercise.KEY_kg));
-                    exercise.kg = temp == null ? "" : temp;
-                    int nFavourite = cursor.getInt(cursor.getColumnIndex(Exercise.KEY_like));
-                    if(nFavourite == 1) exercise.like = true;
-                    else exercise.like = false;
-                    exercise.images = cursor.getString(cursor.getColumnIndex(Exercise.KEY_images));
-                    exerciseList.add(exercise);
-
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-            db.close();
-        }
-        else
-        {
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
-            String selectQuery =  "SELECT  " +
-                    Exercise.KEY_ID + "," +
-                    Exercise.KEY_title_dut + "," +
-                    Exercise.KEY_initialPosition_dut + "," +
-                    Exercise.KEY_movement_dut + "," +
-                    Exercise.KEY_points_dut + "," +
-                    Exercise.KEY_sets + "," +
-                    Exercise.KEY_repetions + "," +
-                    Exercise.KEY_times + "," +
-                    Exercise.KEY_rest + "," +
-                    Exercise.KEY_kg + "," +
-                    Exercise.KEY_like + "," +
-                    Exercise.KEY_images +
-                    " FROM " + Exercise.TABLE +
-                    " WHERE " + Exercise.KEY_like + "=true";
-
-            Cursor cursor = db.rawQuery(selectQuery, null);
-
-            if (cursor.moveToFirst()) {
-                do {
-                    Exercise exercise = new Exercise();
-                    exercise.exercise_id = cursor.getInt(cursor.getColumnIndex(Exercise.KEY_ID));
-                    exercise.workout_id = 0;    // Favourite
-                    exercise.title = cursor.getString(cursor.getColumnIndex(Exercise.KEY_title_dut));
-                    exercise.initialPosition = cursor.getString(cursor.getColumnIndex(Exercise.KEY_initialPosition_dut));
-                    exercise.movement = cursor.getString(cursor.getColumnIndex(Exercise.KEY_movement_dut));
-                    exercise.points = cursor.getString(cursor.getColumnIndex(Exercise.KEY_points_dut));
-                    exercise.sets = cursor.getString(cursor.getColumnIndex(Exercise.KEY_sets));
-                    exercise.repetions = cursor.getString(cursor.getColumnIndex(Exercise.KEY_repetions));
-                    exercise.times = cursor.getString(cursor.getColumnIndex(Exercise.KEY_times));
-                    exercise.rest = cursor.getString(cursor.getColumnIndex(Exercise.KEY_rest));
-                    String temp = cursor.getString(cursor.getColumnIndex(Exercise.KEY_kg));
-                    exercise.kg = temp == null ? "" : temp;
-                    int nFavourite = cursor.getInt(cursor.getColumnIndex(Exercise.KEY_like));
-                    if(nFavourite == 1) exercise.like = true;
-                    else exercise.like = false;
-                    exercise.images = cursor.getString(cursor.getColumnIndex(Exercise.KEY_images));
-                    exerciseList.add(exercise);
-
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-            db.close();
-        }
-
-        return exerciseList;
-    }
-
     public boolean isFavourite(int exercise_id)
     {
         boolean bFavourite = false;
