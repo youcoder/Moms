@@ -132,12 +132,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             rdoDutch.setChecked(true);
     }
 
-    public void movePhotoList(int position) {
-        Intent intent = new Intent(this, ExerciseListActivity.class)
-                .putExtra(ExerciseListActivity.WORKOUT_ID_KEY, position);
-        startActivity(intent);
-    }
-
     @Override
     public void onClick(View v) {
 

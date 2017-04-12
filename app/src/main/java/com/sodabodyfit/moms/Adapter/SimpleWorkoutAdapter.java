@@ -2,6 +2,7 @@ package com.sodabodyfit.moms.Adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sodabodyfit.moms.ExerciseListActivity;
 import com.sodabodyfit.moms.Models.Workout;
 import com.sodabodyfit.moms.R;
 
@@ -44,12 +46,11 @@ public class SimpleWorkoutAdapter extends RecyclerView.Adapter<SimpleWorkoutAdap
 
         holder.tvWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(context, ContentsActivity.class);
-//                intent.putExtra("tab", 3);
-//                intent.putExtra("position", position);
-//                context.startActivity(intent);
-                Toast.makeText(context, String.valueOf(item.workout_id), Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {//
+                Intent intent = new Intent(context, ExerciseListActivity.class);
+                intent.putExtra("workout_title", item.title);
+                intent.putExtra("workout_id", item.workout_id);
+                context.startActivity(intent);
             }
         });
     }

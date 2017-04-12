@@ -57,7 +57,6 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
                 intent.putExtra("workout_title", item.title);
                 intent.putExtra("workout_id", item.workout_id);
                 context.startActivity(intent);
-//                Toast.makeText(context, String.valueOf(item.workout_id), Toast.LENGTH_SHORT).show();
             }
         });
     }

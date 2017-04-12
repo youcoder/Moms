@@ -4,9 +4,9 @@
     tools:context="com.oasis.test.MainActivity">
 
     <item
-        android:id="@+id/action_menu"
-        android:icon="@drawable/ic_menu"
+        android:id="@+id/action_info"
+        android:icon="@drawable/ic_info"
         app:showAsAction="always"
-        android:title="menu"/>
+        android:title="info"/>
 
 </menu>
