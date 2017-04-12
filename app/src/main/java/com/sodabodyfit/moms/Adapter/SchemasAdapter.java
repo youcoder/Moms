@@ -66,11 +66,11 @@ public class SchemasAdapter extends RecyclerView.Adapter<SchemasAdapter.ViewHold
 
         Exercise item = lstExercise.get(position);
         holder.tvSubject.setText(item.title);
-        holder.tvSet.setText(item.title);
-        holder.tvReps.setText(item.title);
-        holder.tvTime.setText(item.title);
-        holder.tvRest.setText(item.title);
-        holder.tvKg.setText(item.title);
+        holder.tvSet.setText(item.sets);
+        holder.tvReps.setText(item.repetions);
+        holder.tvTime.setText(item.times + " sec");
+        holder.tvRest.setText(item.rest + " sec");
+        holder.tvKg.setText(item.kg);
 
     }
 
