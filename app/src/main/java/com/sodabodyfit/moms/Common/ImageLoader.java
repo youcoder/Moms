@@ -6,9 +6,11 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.sodabodyfit.moms.Interface.ImageAPI;
 import com.sodabodyfit.moms.Models.Image;
 import com.sodabodyfit.moms.Provider.DBEngine;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,8 +36,10 @@ public class ImageLoader {
 
         if(imageInfo.isInAssets)
         {
-            Bitmap bMap = BitmapFactory.decodeFile(context.getFilesDir() + File.separator + imageInfo.name + ".png");
-            imageView.setImageBitmap(bMap);
+//            Bitmap bMap = BitmapFactory.decodeFile(context.getFilesDir() + File.separator + imageInfo.name + ".png");
+//            imageView.setImageBitmap(bMap);
+            String path = context.getFilesDir() + File.separator + imageInfo.name + ".png";
+            Glide.with(context).load(path).into(imageView);
         }
         else
         {
@@ -55,10 +59,15 @@ public class ImageLoader {
 
                         Log.d("onResponse", "Response came from server");
 
-                        String imageName = response.raw().request().url().queryParameterValue(0);
-                        boolean bSuccess = DownloadImage(response.body(), context, imageView, imageName);
+                        if(response.body() != null)
+                        {
+                            String imageName = response.raw().request().url().queryParameterValue(0);
+                            boolean bSuccess = DownloadImage(response.body(), context, imageView, imageName);
 
-                        Log.d("onResponse", "Image is downloaded and saved ? " + bSuccess);
+                            Log.d("onResponse", imageName + ".png is downloaded and saved ? " + bSuccess);
+                        }
+                        else
+                            Log.d("onResponse", "Response data is null");
 
                     } catch (Exception e) {
                         Log.d("onResponse", "There is an error");
