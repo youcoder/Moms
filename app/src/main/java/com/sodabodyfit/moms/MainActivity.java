@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void changePassword() {
-        Intent intent = new Intent(MainActivity.this, PasswordActivity.class);
+        Intent intent = new Intent(MainActivity.this, ChangePasswordActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_up, R.anim.stay);
     }

@@ -1,18 +1,14 @@
 package com.sodabodyfit.moms;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sodabodyfit.moms.Common.Constants;
 import com.sodabodyfit.moms.Common.User;
-import com.sodabodyfit.moms.Common.UserInfo;
 import com.sodabodyfit.moms.Interface.ChangePassword;
-import com.sodabodyfit.moms.Interface.RecoveryPassword;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,13 +16,12 @@ import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class PasswordActivity extends Activity implements View.OnClickListener {
+public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_password);
+        setContentView(R.layout.activity_chage_password);
 
         init();
     }
@@ -61,14 +56,12 @@ public class PasswordActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    private void OnDone()
-    {
+    private void OnDone() {
         finish();
         overridePendingTransition(R.anim.stay, R.anim.slide_down);
     }
 
-    private void OnSave()
-    {
+    private void OnSave() {
         changePassword();
 
         finish();

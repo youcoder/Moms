@@ -125,6 +125,9 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         ImageView ivPlus = (ImageView)findViewById(R.id.img_plus);
         ivPlus.setOnClickListener(this);
 
+        ImageView ivBack = (ImageView)findViewById(R.id.img_back);
+        ivPlus.setOnClickListener(this);
+
         m_isFavourite = exercise.like;
 
         if(m_isFavourite)
@@ -291,8 +294,8 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
         switch (nResId)
         {
-            case R.id.btn_back:
-                onBackPressed();
+            case R.id.img_back:
+                ExerciseActivity.this.finish();
                 break;
             case R.id.img_play:
                 onClickPlay();
@@ -310,7 +313,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private void onClickPlus(){
+    private void onClickPlus() {
         Intent intent = new Intent(this, PlusActivity.class);
         startActivity(intent);
     }
@@ -351,7 +354,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void stopPlay(){
+    private void stopPlay() {
         if(m_isPlay)
         {
             m_isPlay = false;
@@ -415,25 +418,5 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         public boolean isViewFromObject(View view, Object object) {
             return view == ((LinearLayout)object);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            ExerciseActivity.this.finish();
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

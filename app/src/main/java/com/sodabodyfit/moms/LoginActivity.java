@@ -95,6 +95,12 @@ public class LoginActivity extends AppCompatActivity{
             return false;
         }
 
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            etEmail.setError(getString(R.string.error_invalid_email));
+            etEmail.requestFocus();
+            return false;
+        }
+
         if (password.isEmpty()){
             etPassword.setError(getString(R.string.error_null_password));
             etPassword.requestFocus();
