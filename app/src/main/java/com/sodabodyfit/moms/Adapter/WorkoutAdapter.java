@@ -46,7 +46,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         holder.tvWorkout.setText(item.title);
 
         DBEngine dbEngine = new DBEngine(this.context);
-        int nCount = dbEngine.getExerciseCount(String.valueOf(item.workout_id));
+        int nCount = dbEngine.getExerciseCount(item.workout_id);
 
         holder.tvExerciseNum.setText(nCount + " EXERCISES");
 

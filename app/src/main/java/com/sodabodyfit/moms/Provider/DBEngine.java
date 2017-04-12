@@ -475,16 +475,33 @@ public class DBEngine {
         return exercise;
     }
 
-    public int getExerciseCount(String workout_id) {
+    public int getExerciseCount(int workout_id) {
         int nExCount = 0;
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery =  "SELECT " +
-                "count(id) as ExCount " +
-                " FROM " + Exercise.TABLE +
-                " WHERE " + Exercise.KEY_workout + "=?";
 
-        Cursor cursor = db.rawQuery(selectQuery, new String[] { workout_id });
+        String selectQuery = "";
+        String[] whereParams = null;
+        if(workout_id == 0)
+        {
+            selectQuery =  "SELECT " +
+                    "count(id) as ExCount " +
+                    " FROM " + Exercise.TABLE +
+                    " WHERE " + Exercise.KEY_like + "=1";
+
+            whereParams = null;
+        }
+        else
+        {
+            selectQuery =  "SELECT " +
+                    "count(id) as ExCount " +
+                    " FROM " + Exercise.TABLE +
+                    " WHERE " + Exercise.KEY_workout + "=?";
+
+            whereParams = new String[] { String.valueOf(workout_id) };
+        }
+
+        Cursor cursor = db.rawQuery(selectQuery, whereParams);
 
         if (cursor.moveToFirst())
             nExCount = cursor.getInt(cursor.getColumnIndex("ExCount"));
@@ -503,7 +520,8 @@ public class DBEngine {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT  " +
                 Image.KEY_name + "," +
-                Image.KEY_isInAssets +
+                Image.KEY_isInAssets + "," +
+                Image.KEY_path +
                 " FROM " + Image.TABLE +
                 " WHERE " + Image.KEY_ID + "=?";
 
@@ -513,9 +531,12 @@ public class DBEngine {
             imageInfo.image_id = Integer.parseInt(imageId);
             imageInfo.name = cursor.getString(cursor.getColumnIndex(Image.KEY_name));
             int nInAssets = cursor.getInt(cursor.getColumnIndex(Image.KEY_isInAssets));
-
             if(nInAssets == 1) imageInfo.isInAssets = true;
             else imageInfo.isInAssets = false;
+
+            int nLoading = cursor.getInt(cursor.getColumnIndex(Image.KEY_path));
+            if(nLoading == 1) imageInfo.path = true;
+            else imageInfo.path = false;
         }
 
         cursor.close();

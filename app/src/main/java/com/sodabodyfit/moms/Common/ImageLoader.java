@@ -40,7 +40,7 @@ public class ImageLoader {
                 String imagePath = context.getFilesDir() + File.separator + imageInfo.name + ".png";
                 Glide.with(context).load(imagePath).placeholder(R.drawable.loading).into(imageView);
             } else {
-                if(imageInfo.path) return;
+                if(imageInfo.path != null && imageInfo.path) return;
 
                 dbEngine.updateImagePath(imageId, true);    // state = downloading...
 

@@ -1,5 +1,6 @@
 package com.sodabodyfit.moms;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -24,8 +25,6 @@ import com.sodabodyfit.moms.Models.Exercise;
 import com.sodabodyfit.moms.Provider.DBEngine;
 
 public class ExerciseActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private int m_nExerciseId = 0;
 
     private Exercise exercise = new Exercise();
     private ViewPager photoViewPager;
@@ -128,7 +127,8 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         ImageView ivBack = (ImageView)findViewById(R.id.img_back);
         ivBack.setOnClickListener(this);
 
-        m_isFavourite = exercise.like;
+        DBEngine dbEngine = new DBEngine(this);
+        m_isFavourite = dbEngine.isFavourite(exercise.exercise_id);
 
         if(m_isFavourite)
             ivFavourite.setImageResource(R.drawable.ic_vote);
@@ -159,6 +159,9 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         });
 
         String[] imageIds = exercise.images.split(",");
+
+        photoViewPager.setOffscreenPageLimit(imageIds.length - 1);
+
         adapter = new ViewPagerAdapter(this, imageIds);
         photoViewPager.setAdapter(adapter);
         pageIndicator = (LinearLayout)findViewById(R.id.viewPagerCountDots);
@@ -295,7 +298,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         switch (nResId)
         {
             case R.id.img_back:
-                ExerciseActivity.this.finish();
+                onBackPressed();
                 break;
             case R.id.img_play:
                 onClickPlay();
@@ -331,7 +334,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         }
 
         DBEngine dbEngine = new DBEngine(this);
-        dbEngine.updateFavourite(m_nExerciseId, m_isFavourite);
+        dbEngine.updateFavourite(exercise.exercise_id, m_isFavourite);
     }
 
     private void onClickAlarm() {
@@ -351,6 +354,16 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
             updatePanel.init(15);
             updatePanel.reset();
             stopPlay();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (exercise.like != m_isFavourite) {
+            Intent intent = new Intent();
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         }
     }
 

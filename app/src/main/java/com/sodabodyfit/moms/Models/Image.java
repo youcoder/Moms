@@ -15,7 +15,7 @@ public class Image {
     public static final String KEY_path = "path";
 
     // property
-    public Integer image_id;
+    public int image_id;
     public String name;
     public Boolean isInAssets;
     public Boolean path;
