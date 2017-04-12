@@ -18,7 +18,7 @@ public interface SignUp {
     @POST(Constants.SIGNUP_PAGE)
     Call<UserInfo> sendSignUpRequest(@Field("name") String name, @Field("email") String email, @Field("password") String password,
                                      @Field("password_confirmation") String confirmation_password, @Field("birthday") String birthday,
-                                     @Field("training_experience") String experience, @Field("gender") String gender,
+                                     @Field("training experience") String experience, @Field("gender") String gender,
                                      @Field("weight") String weight, @Field("height") String height);
 
 
