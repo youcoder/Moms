@@ -58,6 +58,7 @@
     <string name="error_invalid_email">Please enter your email address correctly.</string>
     <string name="error_null_password">Please enter your password.</string>
     <string name="error_failed_connect">Failed connect to server.</string>
+    <string name="error_dismatch_password">Dismatch password.</string>
     <string name="wait">Please Wait...</string>
 
     <string-array name="title_category">

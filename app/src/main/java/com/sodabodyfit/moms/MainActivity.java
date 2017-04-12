@@ -139,12 +139,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (nResId) {
 
             case R.id.ll_disclaimer:
+                dlDrawer.closeDrawers();
                 disclamer();
                 break;
             case R.id.ll_change_password:
+                dlDrawer.closeDrawers();
                 changePassword();
                 break;
             case R.id.ll_logout:
+                dlDrawer.closeDrawers();
                 logout();
                 break;
         }
@@ -166,7 +169,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void changePassword() {
         Intent intent = new Intent(MainActivity.this, ChangePasswordActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_up, R.anim.stay);
     }
 
     @Override
