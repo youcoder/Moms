@@ -126,7 +126,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         ivPlus.setOnClickListener(this);
 
         ImageView ivBack = (ImageView)findViewById(R.id.img_back);
-        ivPlus.setOnClickListener(this);
+        ivBack.setOnClickListener(this);
 
         m_isFavourite = exercise.like;
 

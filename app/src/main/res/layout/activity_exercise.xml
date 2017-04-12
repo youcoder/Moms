@@ -257,8 +257,8 @@
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
             android:src="@drawable/ic_back"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"/>
