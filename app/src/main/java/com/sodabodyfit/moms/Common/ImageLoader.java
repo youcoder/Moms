@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.sodabodyfit.moms.Interface.ImageAPI;
 import com.sodabodyfit.moms.Models.Image;
 import com.sodabodyfit.moms.Provider.DBEngine;
+import com.sodabodyfit.moms.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -31,55 +32,54 @@ import retrofit2.Retrofit;
 public class ImageLoader {
     public static void LoadImage(final Context context, final ImageView imageView, String imageId)
     {
-        DBEngine dbEngine = new DBEngine(context);
-        Image imageInfo = dbEngine.getImageInfo(imageId);
+        try {
+            DBEngine dbEngine = new DBEngine(context);
+            Image imageInfo = dbEngine.getImageInfo(imageId);
 
-        if(imageInfo.isInAssets)
-        {
-//            Bitmap bMap = BitmapFactory.decodeFile(context.getFilesDir() + File.separator + imageInfo.name + ".png");
-//            imageView.setImageBitmap(bMap);
-            String path = context.getFilesDir() + File.separator + imageInfo.name + ".png";
-            Glide.with(context).load(path).into(imageView);
-        }
-        else
-        {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(Constants.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+            if (imageInfo.isInAssets) {
 
-            ImageAPI service = retrofit.create(ImageAPI.class);
+                String imagePath = context.getFilesDir() + File.separator + imageInfo.name + ".png";
+                Glide.with(context).load(imagePath).placeholder(R.drawable.loading).into(imageView);
+            } else {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(Constants.BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            Call<ResponseBody> call = service.getImageRequest("Token token=" + User.token, imageInfo.name);
+                ImageAPI service = retrofit.create(ImageAPI.class);
 
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    try {
+                Call<ResponseBody> call = service.getImageRequest("Token token=" + User.token, imageInfo.name);
 
-                        Log.d("onResponse", "Response came from server");
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
 
-                        if(response.body() != null)
-                        {
-                            String imageName = response.raw().request().url().queryParameterValue(0);
-                            boolean bSuccess = DownloadImage(response.body(), context, imageView, imageName);
+                            Log.d("onResponse", "Response came from server");
 
-                            Log.d("onResponse", imageName + ".png is downloaded and saved ? " + bSuccess);
+                            if (response.body() != null) {
+                                String imageName = response.raw().request().url().queryParameterValue(0);
+                                boolean bSuccess = DownloadImage(response.body(), context, imageView, imageName);
+
+                                Log.d("onResponse", imageName + ".png is downloaded and saved ? " + bSuccess);
+                            } else
+                                Log.d("onResponse", "Response data is null");
+
+                        } catch (Exception e) {
+                            Log.d("onResponse", "There is an error");
+                            e.printStackTrace();
                         }
-                        else
-                            Log.d("onResponse", "Response data is null");
-
-                    } catch (Exception e) {
-                        Log.d("onResponse", "There is an error");
-                        e.printStackTrace();
                     }
-                }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.d("onFailure", t.toString());
-                }
-            });
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.d("onFailure", t.toString());
+                    }
+                });
+            }
+        }
+        catch (Exception e){
+            Log.d("LoadImage", e.toString());
         }
     }
 
@@ -107,10 +107,8 @@ public class ImageLoader {
                 }
             }
 
-//            Bitmap bMap = BitmapFactory.decodeFile(context.getFilesDir() + File.separator + fileName + ".png");
-//            imageView.setImageBitmap(bMap);
-            String path = context.getFilesDir() + File.separator + fileName + ".png";
-            Glide.with(context).load(path).into(imageView);
+            String imagePath = context.getFilesDir() + File.separator + fileName + ".png";
+            Glide.with(context).load(imagePath).placeholder(R.drawable.loading).into(imageView);
 
             DBEngine dbEngine = new DBEngine(context);
             dbEngine.updateImageInAssets(fileName);
