@@ -247,6 +247,8 @@ public class DBEngine {
                     Exercise.KEY_repetions + "," +
                     Exercise.KEY_times + "," +
                     Exercise.KEY_rest + "," +
+                    Exercise.KEY_kg + "," +
+                    Exercise.KEY_like + "," +
                     Exercise.KEY_images +
                     " FROM " + Exercise.TABLE +
                     " WHERE " + Exercise.KEY_workout + "=?";
@@ -266,6 +268,11 @@ public class DBEngine {
                     exercise.repetions = cursor.getString(cursor.getColumnIndex(Exercise.KEY_repetions));
                     exercise.times = cursor.getString(cursor.getColumnIndex(Exercise.KEY_times));
                     exercise.rest = cursor.getString(cursor.getColumnIndex(Exercise.KEY_rest));
+                    String temp = cursor.getString(cursor.getColumnIndex(Exercise.KEY_kg));
+                    exercise.kg = temp == null ? "" : temp;
+                    int nFavourite = cursor.getInt(cursor.getColumnIndex(Exercise.KEY_like));
+                    if(nFavourite == 1) exercise.like = true;
+                    else exercise.like = false;
                     exercise.images = cursor.getString(cursor.getColumnIndex(Exercise.KEY_images));
                     exerciseList.add(exercise);
 
@@ -287,6 +294,7 @@ public class DBEngine {
                     Exercise.KEY_repetions + "," +
                     Exercise.KEY_times + "," +
                     Exercise.KEY_rest + "," +
+                    Exercise.KEY_kg + "," +
                     Exercise.KEY_images +
                     " FROM " + Exercise.TABLE +
                     " WHERE " + Exercise.KEY_workout + "=?";
@@ -306,6 +314,11 @@ public class DBEngine {
                     exercise.repetions = cursor.getString(cursor.getColumnIndex(Exercise.KEY_repetions));
                     exercise.times = cursor.getString(cursor.getColumnIndex(Exercise.KEY_times));
                     exercise.rest = cursor.getString(cursor.getColumnIndex(Exercise.KEY_rest));
+                    String temp = cursor.getString(cursor.getColumnIndex(Exercise.KEY_kg));
+                    exercise.kg = temp == null ? "" : temp;
+                    int nFavourite = cursor.getInt(cursor.getColumnIndex(Exercise.KEY_like));
+                    if(nFavourite == 1) exercise.like = true;
+                    else exercise.like = false;
                     exercise.images = cursor.getString(cursor.getColumnIndex(Exercise.KEY_images));
                     exerciseList.add(exercise);
 
@@ -333,6 +346,8 @@ public class DBEngine {
                     Exercise.KEY_repetions + "," +
                     Exercise.KEY_times + "," +
                     Exercise.KEY_rest + "," +
+                    Exercise.KEY_kg + "," +
+                    Exercise.KEY_like + "," +
                     Exercise.KEY_images +
                     " FROM " + Exercise.TABLE +
                     " WHERE " + Exercise.KEY_ID + "=?";
@@ -349,6 +364,11 @@ public class DBEngine {
                 exercise.repetions = cursor.getString(cursor.getColumnIndex(Exercise.KEY_repetions));
                 exercise.times = cursor.getString(cursor.getColumnIndex(Exercise.KEY_times));
                 exercise.rest = cursor.getString(cursor.getColumnIndex(Exercise.KEY_rest));
+                String temp = cursor.getString(cursor.getColumnIndex(Exercise.KEY_kg));
+                exercise.kg = temp == null ? "" : temp;
+                int nFavourite = cursor.getInt(cursor.getColumnIndex(Exercise.KEY_like));
+                if(nFavourite == 1) exercise.like = true;
+                else exercise.like = false;
                 exercise.images = cursor.getString(cursor.getColumnIndex(Exercise.KEY_images));
             }
             cursor.close();
@@ -366,6 +386,8 @@ public class DBEngine {
                     Exercise.KEY_repetions + "," +
                     Exercise.KEY_times + "," +
                     Exercise.KEY_rest + "," +
+                    Exercise.KEY_kg + "," +
+                    Exercise.KEY_like + "," +
                     Exercise.KEY_images +
                     " FROM " + Exercise.TABLE +
                     " WHERE " + Exercise.KEY_ID + "=?";
@@ -382,6 +404,11 @@ public class DBEngine {
                 exercise.repetions = cursor.getString(cursor.getColumnIndex(Exercise.KEY_repetions));
                 exercise.times = cursor.getString(cursor.getColumnIndex(Exercise.KEY_times));
                 exercise.rest = cursor.getString(cursor.getColumnIndex(Exercise.KEY_rest));
+                String temp = cursor.getString(cursor.getColumnIndex(Exercise.KEY_kg));
+                exercise.kg = temp == null ? "" : temp;
+                int nFavourite = cursor.getInt(cursor.getColumnIndex(Exercise.KEY_like));
+                if(nFavourite == 1) exercise.like = true;
+                else exercise.like = false;
                 exercise.images = cursor.getString(cursor.getColumnIndex(Exercise.KEY_images));
             }
             cursor.close();
@@ -469,6 +496,8 @@ public class DBEngine {
                     Exercise.KEY_repetions + "," +
                     Exercise.KEY_times + "," +
                     Exercise.KEY_rest + "," +
+                    Exercise.KEY_kg + "," +
+                    Exercise.KEY_like + "," +
                     Exercise.KEY_images +
                     " FROM " + Exercise.TABLE +
                     " WHERE " + Exercise.KEY_like + "=true";
@@ -488,6 +517,11 @@ public class DBEngine {
                     exercise.repetions = cursor.getString(cursor.getColumnIndex(Exercise.KEY_repetions));
                     exercise.times = cursor.getString(cursor.getColumnIndex(Exercise.KEY_times));
                     exercise.rest = cursor.getString(cursor.getColumnIndex(Exercise.KEY_rest));
+                    String temp = cursor.getString(cursor.getColumnIndex(Exercise.KEY_kg));
+                    exercise.kg = temp == null ? "" : temp;
+                    int nFavourite = cursor.getInt(cursor.getColumnIndex(Exercise.KEY_like));
+                    if(nFavourite == 1) exercise.like = true;
+                    else exercise.like = false;
                     exercise.images = cursor.getString(cursor.getColumnIndex(Exercise.KEY_images));
                     exerciseList.add(exercise);
 
@@ -509,6 +543,8 @@ public class DBEngine {
                     Exercise.KEY_repetions + "," +
                     Exercise.KEY_times + "," +
                     Exercise.KEY_rest + "," +
+                    Exercise.KEY_kg + "," +
+                    Exercise.KEY_like + "," +
                     Exercise.KEY_images +
                     " FROM " + Exercise.TABLE +
                     " WHERE " + Exercise.KEY_like + "=true";
@@ -528,6 +564,11 @@ public class DBEngine {
                     exercise.repetions = cursor.getString(cursor.getColumnIndex(Exercise.KEY_repetions));
                     exercise.times = cursor.getString(cursor.getColumnIndex(Exercise.KEY_times));
                     exercise.rest = cursor.getString(cursor.getColumnIndex(Exercise.KEY_rest));
+                    String temp = cursor.getString(cursor.getColumnIndex(Exercise.KEY_kg));
+                    exercise.kg = temp == null ? "" : temp;
+                    int nFavourite = cursor.getInt(cursor.getColumnIndex(Exercise.KEY_like));
+                    if(nFavourite == 1) exercise.like = true;
+                    else exercise.like = false;
                     exercise.images = cursor.getString(cursor.getColumnIndex(Exercise.KEY_images));
                     exerciseList.add(exercise);
 
