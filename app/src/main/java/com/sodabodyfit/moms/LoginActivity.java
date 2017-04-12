@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sodabodyfit.moms.Common.Constants;
+import com.sodabodyfit.moms.Common.User;
 import com.sodabodyfit.moms.Interface.Login;
 import com.sodabodyfit.moms.Common.UserInfo;
 
@@ -131,6 +132,7 @@ public class LoginActivity extends AppCompatActivity{
                 if(response.isSuccessful()) {
                     progress.dismiss();
                     UserInfo obj = response.body();
+                    User.token = obj.token;
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     LoginActivity.this.finish();
