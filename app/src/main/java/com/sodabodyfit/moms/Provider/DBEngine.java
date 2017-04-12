@@ -536,6 +536,18 @@ public class DBEngine {
         return  true;
     }
 
+    public boolean updateImagePath(String imageId, Boolean bLoading)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Image.KEY_path, bLoading);
+        db.update(Image.TABLE, values, Image.KEY_ID + "=?", new String[]{ imageId });
+        db.close();
+
+        return  true;
+    }
+
     // Favourite
     public boolean isFavourite(int exercise_id)
     {

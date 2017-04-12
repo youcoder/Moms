@@ -30,24 +30,26 @@ import retrofit2.Retrofit;
  */
 
 public class ImageLoader {
-    public static void LoadImage(final Context context, final ImageView imageView, String imageId)
+    public static void LoadImage(final Context context, final ImageView imageView, final String imageId)
     {
         try {
             DBEngine dbEngine = new DBEngine(context);
             Image imageInfo = dbEngine.getImageInfo(imageId);
 
             if (imageInfo.isInAssets) {
-
                 String imagePath = context.getFilesDir() + File.separator + imageInfo.name + ".png";
                 Glide.with(context).load(imagePath).placeholder(R.drawable.loading).into(imageView);
             } else {
+                if(imageInfo.path) return;
+
+                dbEngine.updateImagePath(imageId, true);    // state = downloading...
+
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(Constants.BASE_URL)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
                 ImageAPI service = retrofit.create(ImageAPI.class);
-
                 Call<ResponseBody> call = service.getImageRequest("Token token=" + User.token, imageInfo.name);
 
                 call.enqueue(new Callback<ResponseBody>() {
@@ -69,11 +71,18 @@ public class ImageLoader {
                             Log.d("onResponse", "There is an error");
                             e.printStackTrace();
                         }
+                        finally {
+                            DBEngine dbEngine = new DBEngine(context);
+                            dbEngine.updateImagePath(imageId, false);
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("onFailure", t.toString());
+
+                        DBEngine dbEngine = new DBEngine(context);
+                        dbEngine.updateImagePath(imageId, false);
                     }
                 });
             }
