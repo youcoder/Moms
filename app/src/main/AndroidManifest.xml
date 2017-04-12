@@ -54,10 +54,6 @@
             android:theme="@style/AppThemeNoTitle"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TestActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".PlusActivity"
             android:theme="@style/AppThemeNoTitle"
             android:screenOrientation="portrait" />
