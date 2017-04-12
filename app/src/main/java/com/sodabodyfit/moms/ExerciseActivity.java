@@ -155,11 +155,11 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        int[] photoList = {R.drawable.p_1_1_0, R.drawable.p_1_1_1, R.drawable.p_1_1_2};
-//        adapter = new ViewPagerAdapter(this, photoList);
-//        photoViewPager.setAdapter(adapter);
-//        pageIndicator = (LinearLayout)findViewById(R.id.viewPagerCountDots);
-//        setUiPageViewController();
+        String[] imageIds = exercise.images.split(",");
+        adapter = new ViewPagerAdapter(this, imageIds);
+        photoViewPager.setAdapter(adapter);
+        pageIndicator = (LinearLayout)findViewById(R.id.viewPagerCountDots);
+        setUiPageViewController();
 
         //ViewPager auto play animation
         m_PlayRunnable = new Runnable() {
@@ -380,32 +380,27 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     public class ViewPagerAdapter extends PagerAdapter {
 
         private Context mContext;
-        private int[] mPaths = null;
+        private String[] mImageIds = null;
 
-        public ViewPagerAdapter(Context context, int[] paths)
+        public ViewPagerAdapter(Context context, String[] imageIds)
         {
             mContext = context;
-            mPaths = paths;
+            mImageIds = imageIds;
         }
 
         @Override
         public int getCount() {
-            return mPaths.length;
+            return mImageIds.length;
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
 
             View itemView = LayoutInflater.from(mContext).inflate(R.layout.exercise_photo, container, false);
-
-            DBEngine dbEngine = new DBEngine(mContext);
-            Exercise exercise = dbEngine.getExerciseInfo(m_nExerciseId);
-
             ImageView imageView = (ImageView)itemView.findViewById(R.id.img_photo);
 
-            String[] imageIds = exercise.images.split(",");
-            if(imageIds.length > 0)
-                ImageLoader.LoadImage(mContext, imageView, imageIds[0]);
+            if(mImageIds.length > position)
+                ImageLoader.LoadImage(mContext, imageView, mImageIds[position]);
 
             container.addView(itemView);
             return itemView;
