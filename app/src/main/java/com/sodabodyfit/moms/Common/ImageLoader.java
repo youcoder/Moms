@@ -107,8 +107,10 @@ public class ImageLoader {
                 }
             }
 
-            Bitmap bMap = BitmapFactory.decodeFile(context.getFilesDir() + File.separator + fileName + ".png");
-            imageView.setImageBitmap(bMap);
+//            Bitmap bMap = BitmapFactory.decodeFile(context.getFilesDir() + File.separator + fileName + ".png");
+//            imageView.setImageBitmap(bMap);
+            String path = context.getFilesDir() + File.separator + fileName + ".png";
+            Glide.with(context).load(path).into(imageView);
 
             DBEngine dbEngine = new DBEngine(context);
             dbEngine.updateImageInAssets(fileName);
