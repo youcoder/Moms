@@ -1,59 +1,41 @@
 package com.sodabodyfit.moms;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sodabodyfit.moms.Common.Constants;
 import com.sodabodyfit.moms.Common.DrawView;
-import com.sodabodyfit.moms.Interface.ImageAPI;
 import com.sodabodyfit.moms.Models.Exercise;
-import com.sodabodyfit.moms.Models.Image;
 import com.sodabodyfit.moms.Provider.DBEngine;
-import com.sodabodyfit.moms.R;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.GsonConverterFactory;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-
-
-public class ExerciseActivity extends Activity implements View.OnClickListener {
-    public static final String EXERCISE_ID_KEY = "exercise_id";
+public class ExerciseActivity extends AppCompatActivity implements View.OnClickListener {
 
     private int m_nExerciseId = 0;
 
-    private ViewPager m_PhotoPager = null;
-    private LinearLayout m_PageIndicator = null;
-    private ViewPagerAdapter m_PagerAdapter = null;
-    private ImageView[] m_PageIndicatorDots = null;
-    private ImageView m_Play = null;
-    private ImageView m_AlarmPlay = null;
-    private ImageView m_Favourite = null;
-    private DrawView m_UpdatePanel = null;
-    private int m_PageCount = 0;
+    private Exercise exercise = new Exercise();
+    private ViewPager photoViewPager;
+    private LinearLayout pageIndicator = null;
+    private ViewPagerAdapter adapter = null;
+    private ImageView[] pageIndicatorDots = null;
+    private ImageView ivPlay = null;
+    private ImageView ivExercise = null;
+    private ImageView ivFavourite = null;
+    private DrawView updatePanel = null;
+    private int pageCount = 0;
 
     private int m_Set = 3;
     private int m_CurSet = 3;
@@ -81,99 +63,74 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_exercise);
 
-        m_nExerciseId = getIntent().getIntExtra(EXERCISE_ID_KEY, 1);
+        exercise = getIntent().getParcelableExtra("exercise");
+        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf");
 
-        init();
-    }
+        TextView tvSubject = (TextView)findViewById(R.id.txt_schema_content);
+        tvSubject.setTypeface(typeFace);
+        tvSubject.setText(exercise.title);
 
-    private void init()
-    {
-        DBEngine dbEngine = new DBEngine(this);
-        Exercise exercise = dbEngine.getExerciseInfo(m_nExerciseId);
-
-        TextView tvTitle = (TextView)findViewById(R.id.tv_title);
-        tvTitle.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf"));
-        tvTitle.setText(exercise.title);
-
-        TextView label_set = (TextView)findViewById(R.id.label_set);
-        label_set.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf"));
-        TextView tvSet = (TextView)findViewById(R.id.tv_set);
+        TextView tvSet = (TextView)findViewById(R.id.txt_set);
         tvSet.setText(exercise.sets);
 
-        TextView label_reps = (TextView)findViewById(R.id.label_reps);
-        label_reps.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf"));
-        TextView tvReps = (TextView)findViewById(R.id.tv_reps);
+        TextView tvReps = (TextView)findViewById(R.id.txt_reps);
         tvReps.setText(exercise.repetions);
 
-        TextView label_time = (TextView)findViewById(R.id.label_tiem);
-        label_time.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf"));
-        TextView tvTime = (TextView)findViewById(R.id.tv_time);
+        TextView tvTime = (TextView)findViewById(R.id.txt_time);
         tvTime.setText(exercise.times + " sec");
 
-        TextView label_rest = (TextView)findViewById(R.id.label_rest);
-        label_rest.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf"));
-        TextView tvRest = (TextView)findViewById(R.id.tv_rest);
+        TextView tvRest = (TextView)findViewById(R.id.txt_rest);
         tvRest.setText(exercise.rest + " sec");
 
-        TextView label_kg = (TextView)findViewById(R.id.label_kg);
-        label_kg.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf"));
-        TextView tvKg = (TextView)findViewById(R.id.tv_kg);
+        TextView tvKg = (TextView)findViewById(R.id.txt_kg);
         tvKg.setText(exercise.kg);
 
-        TextView label_starting_position = (TextView)findViewById(R.id.label_starting_position);
-        label_starting_position.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf"));
-        TextView tvStartPosition = (TextView)findViewById(R.id.tv_starting_position);
-        tvStartPosition.setText(exercise.initialPosition);
+        TextView tvStartPosition = (TextView)findViewById(R.id.txt_starting_position);
+        tvStartPosition.setTypeface(typeFace);
+        TextView tvStartPositionContent = (TextView)findViewById(R.id.txt_starting_position_content);
+        tvStartPositionContent.setText(exercise.initialPosition);
 
-        TextView label_movement = (TextView)findViewById(R.id.label_movement);
-        label_movement.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf"));
-        TextView tvMovement = (TextView)findViewById(R.id.tv_movment);
-        tvMovement.setText(exercise.movement);
+        TextView tvMovement = (TextView)findViewById(R.id.txt_movement);
+        tvMovement.setTypeface(typeFace);
+        TextView tvMovementContent = (TextView)findViewById(R.id.txt_movment_content);
+        tvMovementContent.setText(exercise.movement);
 
-        TextView label_points_remember = (TextView)findViewById(R.id.label_points_remember);
-        label_points_remember.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Aleo-Bold.otf"));
-        TextView tvPointRemember = (TextView)findViewById(R.id.tv_points_remember);
-        tvPointRemember.setText(exercise.points);
-
-        TextView tvBack = (TextView)findViewById(R.id.tv_back);
-        tvBack.setText(dbEngine.getWorkoutNameByExerciseId(m_nExerciseId));
-
-        ImageView btn_back = (ImageView)findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(this);
-
-        ImageView btn_plus = (ImageView)findViewById(R.id.btn_plus);
-        btn_plus.setOnClickListener(this);
+        TextView tvPointRemember = (TextView)findViewById(R.id.txt_points_remember);
+        tvPointRemember.setTypeface(typeFace);
+        TextView tvPointRememberContent = (TextView)findViewById(R.id.txt_points_remember_content);
+        tvPointRememberContent.setText(exercise.points);
 
         m_Set = Integer.parseInt(exercise.sets);
 
         m_ExerciseTime = 15;
-        m_UpdatePanel = (DrawView)findViewById(R.id.update_panel);
-        m_UpdatePanel.init(m_ExerciseTime);
+        updatePanel = (DrawView)findViewById(R.id.update_panel);
+        updatePanel.init(m_ExerciseTime);
 
         m_RestTime = Integer.parseInt(exercise.rest);
 
-        m_Play = (ImageView)findViewById(R.id.btn_play);
-        m_Play.setOnClickListener(this);
+        ivPlay = (ImageView)findViewById(R.id.btn_play);
+        ivPlay.setOnClickListener(this);
 
-        m_AlarmPlay = (ImageView)findViewById(R.id.btn_alarm);
-        m_AlarmPlay.setOnClickListener(this);
-        m_Favourite = (ImageView) findViewById(R.id.btn_favourites);
-        m_Favourite.setOnClickListener(this);
+        ivExercise = (ImageView)findViewById(R.id.btn_alarm);
+        ivExercise.setOnClickListener(this);
+        
+        ivFavourite = (ImageView) findViewById(R.id.btn_favourites);
+        ivFavourite.setOnClickListener(this);
 
         m_isFavourite = dbEngine.isFavourite(m_nExerciseId);
 
         if(m_isFavourite)
-            m_Favourite.setImageResource(R.drawable.favourites_icon_select);
+            ivFavourite.setImageResource(R.drawable.ic_vote);
         else
-            m_Favourite.setImageResource(R.drawable.favourites_icon);
+            ivFavourite.setImageResource(R.drawable.ic_unvote);
 
-        m_PhotoPager = (ViewPager)findViewById(R.id.photo_pager);
+        photoViewPager = (ViewPager)findViewById(R.id.photo_pager);
 
-        m_PhotoPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        photoViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -181,11 +138,11 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void onPageSelected(int position) {
-                for (int i = 0; i < m_PageCount; i++) {
-                    m_PageIndicatorDots[i].setImageResource(R.drawable.nonselecteditem_dot);
+                for (int i = 0; i < pageCount; i++) {
+                    pageIndicatorDots[i].setImageResource(R.drawable.nonselecteditem_dot);
                 }
 
-                m_PageIndicatorDots[position].setImageResource(R.drawable.selecteditem_dot);
+                pageIndicatorDots[position].setImageResource(R.drawable.selecteditem_dot);
             }
 
             @Override
@@ -195,9 +152,9 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
         });
 
         int[] photoList = {R.drawable.p_1_1_0, R.drawable.p_1_1_1, R.drawable.p_1_1_2};
-        m_PagerAdapter = new ViewPagerAdapter(this, photoList);
-        m_PhotoPager.setAdapter(m_PagerAdapter);
-        m_PageIndicator = (LinearLayout)findViewById(R.id.viewPagerCountDots);
+        adapter = new ViewPagerAdapter(this, photoList);
+        photoViewPager.setAdapter(adapter);
+        pageIndicator = (LinearLayout)findViewById(R.id.viewPagerCountDots);
         setUiPageViewController();
 
         //ViewPager auto play animation
@@ -248,14 +205,14 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
     private void startRest()
     {
         m_CurRestTime = m_RestTime;
-        m_UpdatePanel.setTimeCount(m_CurRestTime, "REST");
+        updatePanel.setTimeCount(m_CurRestTime, "REST");
         m_RestHandler.postDelayed(m_RestRunnable, REST_DELAY);
     }
 
     private void countDownRest()
     {
         m_CurRestTime--;
-        m_UpdatePanel.setYPos(m_CurRestTime);
+        updatePanel.setYPos(m_CurRestTime);
     }
     private void stopRest() {
         m_ExerciseHandler.removeCallbacks(m_ExerciseRunnable);
@@ -264,7 +221,7 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
         m_CurSet--;
         if (m_CurSet == 0) {
             stopPlay();
-            m_UpdatePanel.ExitDraw();
+            updatePanel.ExitDraw();
             m_CurSet = m_Set;
         }
         else
@@ -276,15 +233,15 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
     private void startExercise()
     {
         m_CurExerciseTime = m_ExerciseTime;
-        m_UpdatePanel.setTimeCount(m_CurExerciseTime, "EXERCISE");
-        m_UpdatePanel.reset();
+        updatePanel.setTimeCount(m_CurExerciseTime, "EXERCISE");
+        updatePanel.reset();
         m_ExerciseHandler.postDelayed(m_ExerciseRunnable, EXERCISE_DELAY);
     }
 
     private void countDownExercise()
     {
         m_CurExerciseTime--;
-        m_UpdatePanel.setYPos(m_CurExerciseTime);
+        updatePanel.setYPos(m_CurExerciseTime);
     }
 
     private void stopExercise()
@@ -295,20 +252,20 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
 
     private void updatePage()
     {
-        m_PhotoPager.setCurrentItem(m_CurrentPageNum, false);
+        photoViewPager.setCurrentItem(m_CurrentPageNum, false);
         m_CurrentPageNum++;
-        if(m_CurrentPageNum > m_PageCount)
+        if(m_CurrentPageNum > pageCount)
             m_CurrentPageNum = 0;
     }
 
     private void setUiPageViewController() {
 
-        m_PageCount = m_PagerAdapter.getCount();
-        m_PageIndicatorDots = new ImageView[m_PageCount];
+        pageCount = adapter.getCount();
+        pageIndicatorDots = new ImageView[pageCount];
 
-        for (int i = 0; i < m_PageCount; i++) {
-            m_PageIndicatorDots[i] = new ImageView(this);
-            m_PageIndicatorDots[i].setImageDrawable(getResources().getDrawable(R.drawable.nonselecteditem_dot));
+        for (int i = 0; i < pageCount; i++) {
+            pageIndicatorDots[i] = new ImageView(this);
+            pageIndicatorDots[i].setImageDrawable(getResources().getDrawable(R.drawable.nonselecteditem_dot));
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -317,10 +274,10 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
 
             params.setMargins(8, 0, 8, 0);
 
-            m_PageIndicator.addView(m_PageIndicatorDots[i], params);
+            pageIndicator.addView(pageIndicatorDots[i], params);
         }
 
-        m_PageIndicatorDots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
+        pageIndicatorDots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
     }
 
     @Override
@@ -358,12 +315,12 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
         if(m_isFavourite)
         {
             m_isFavourite = false;
-            m_Favourite.setImageResource(R.drawable.favourites_icon);
+            ivFavourite.setImageResource(R.drawable.ic_unvote);
         }
         else
         {
             m_isFavourite = true;
-            m_Favourite.setImageResource(R.drawable.favourites_icon_select);
+            ivFavourite.setImageResource(R.drawable.ic_vote);
         }
 
         DBEngine dbEngine = new DBEngine(this);
@@ -374,29 +331,28 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
         if(m_isAlarm)
         {
             m_isAlarm = false;
-            m_AlarmPlay.setImageResource(R.drawable.alarm_icon);
-            m_UpdatePanel.setVisibility(View.GONE);
+            ivExercise.setImageResource(R.drawable.ic_stop_exercise);
+            updatePanel.setVisibility(View.GONE);
             stopRest();
         }
         else
         {
             m_isAlarm = true;
-            m_AlarmPlay.setImageResource(R.drawable.alarm_icon_select);
-            m_UpdatePanel.setVisibility(View.VISIBLE);
+            ivExercise.setImageResource(R.drawable.ic_start_exercise);
+            updatePanel.setVisibility(View.VISIBLE);
             m_CurSet = m_Set;
-            m_UpdatePanel.init(15);
-            m_UpdatePanel.reset();
+            updatePanel.init(15);
+            updatePanel.reset();
             stopPlay();
         }
     }
-
 
     private void stopPlay(){
         if(m_isPlay)
         {
             m_isPlay = false;
             m_PlayHandler.removeCallbacks(m_PlayRunnable);
-            m_Play.setImageResource(R.drawable.play_icon);
+            ivPlay.setImageResource(R.drawable.play_icon);
         }
     }
 
@@ -405,24 +361,19 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
         {
             m_isPlay = false;
             m_PlayHandler.removeCallbacks(m_PlayRunnable);
-            m_Play.setImageResource(R.drawable.play_icon);
+            ivPlay.setImageResource(R.drawable.play_icon);
         }
         else
         {
             m_isPlay = true;
             m_PlayHandler.postDelayed(m_PlayRunnable, PLAY_DELAY);
-            m_Play.setImageResource(R.drawable.pause_icon);
+            ivPlay.setImageResource(R.drawable.pause_icon);
             if(m_isAlarm)
                 startExercise();
         }
     }
 
-    /**
-     * Created by MokRan on 2017-02-11.
-     */
-
     public class ViewPagerAdapter extends PagerAdapter {
-
 
         private Context mContext;
         private int[] mPaths = null;
@@ -463,98 +414,25 @@ public class ExerciseActivity extends Activity implements View.OnClickListener {
         public boolean isViewFromObject(View view, Object object) {
             return view == ((LinearLayout)object);
         }
+    }
 
-        // added by usc on 2017/04/10
-        public void LoadImage(final View convertView, String imageId)
-        {
-            DBEngine dbEngine = new DBEngine(mContext);
-            Image imageInfo = dbEngine.getImageInfo(imageId);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-            if(imageInfo.isInAssets)
-            {
-                ImageView image = (ImageView) convertView.findViewById(R.id.img_photo);
-                Bitmap bMap = BitmapFactory.decodeFile(getFilesDir() + File.separator + imageInfo.name + ".png");
-                image.setImageBitmap(bMap);
-            }
-            else
-            {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(Constants.BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+        return true;
+    }
 
-                ImageAPI service = retrofit.create(ImageAPI.class);
-
-                Call<ResponseBody> call = service.getImageRequest("Token token=Z6VXst4ia9f3ayUwrTDVgypT", imageInfo.name);
-
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-
-                            Log.d("onResponse", "Response came from server");
-
-                            String imageName = response.raw().request().url().queryParameterValue(0);
-                            boolean bSuccess = DownloadImage(response.body(), convertView, imageName);
-
-                            Log.d("onResponse", "Image is downloaded and saved ? " + bSuccess);
-
-                        } catch (Exception e) {
-                            Log.d("onResponse", "There is an error");
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.d("onFailure", t.toString());
-                    }
-                });
-            }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            ExerciseActivity.this.finish();
         }
-
-        private boolean DownloadImage(ResponseBody body, View convertView, String fileName) {
-
-            try {
-                Log.d("DownloadImage", "Reading and writing file");
-                InputStream in = null;
-                FileOutputStream out = null;
-
-                try {
-                    in = body.byteStream();
-                    out = new FileOutputStream(getFilesDir() + File.separator + fileName + ".png");
-                    int c;
-
-                    while ((c = in.read()) != -1) {
-                        out.write(c);
-                    }
-                }
-                catch (IOException e) {
-                    Log.d("DownloadImage",e.toString());
-                    return false;
-                }
-                finally {
-                    if (in != null) {
-                        in.close();
-                    }
-                    if (out != null) {
-                        out.close();
-                    }
-                }
-
-                ImageView image = (ImageView) convertView.findViewById(R.id.img_photo);
-                Bitmap bMap = BitmapFactory.decodeFile(getFilesDir() + File.separator + fileName + ".png");
-                image.setImageBitmap(bMap);
-
-                DBEngine dbEngine = new DBEngine(mContext);
-                dbEngine.updateImageInAssets(fileName);
-
-                return true;
-
-            } catch (IOException e) {
-                Log.d("DownloadImage",e.toString());
-                return false;
-            }
-        }
+        return super.onOptionsItemSelected(item);
     }
 }

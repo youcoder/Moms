@@ -34,7 +34,7 @@
             android:id="@+id/img_favourite"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_heart"
+            android:src="@drawable/ic_vote"
             android:layout_alignTop="@id/txt_subject"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"

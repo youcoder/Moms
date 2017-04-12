@@ -238,21 +238,21 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/alarm_icon" />
+                android:src="@drawable/ic_stop_exercise" />
             <ImageView
                 android:id="@+id/btn_favourites"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/favourites_icon" />
+                android:src="@drawable/ic_unvote" />
             <ImageView
                 android:id="@+id/btn_plus"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="20dp"
-                android:src="@drawable/plus_icon" />
+                android:src="@drawable/ic_plus" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"

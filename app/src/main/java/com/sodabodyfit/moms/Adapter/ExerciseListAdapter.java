@@ -79,8 +79,7 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ExerciseActivity.class);
-//                intent.putExtra("workout_title", item.title);
-//                intent.putExtra("workout_id", item.workout_id);
+                intent.putExtra("exercise", item);
                 context.startActivity(intent);
             }
         });

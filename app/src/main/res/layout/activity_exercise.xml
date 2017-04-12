@@ -1,167 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_help"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.sodabodyfit.moms.ExerciseActivity">
+    android:layout_height="match_parent" >
 
-
-    <LinearLayout
-        android:id="@+id/play_screen"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="100" >
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="#00000000">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right">
+
+                <ImageView
+                    android:id="@+id/img_exercise"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_stop_exercise"
+                    android:layout_marginRight="5dp"/>
+
+                <ImageView
+                    android:id="@+id/img_favourite"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_unvote"
+                    android:layout_marginRight="5dp"/>
+
+                <ImageView
+                    android:id="@+id/img_plus"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="ic_plus"
+                    android:layout_marginRight="5dp"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/photo_pager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="45" >
+            android:layout_height="240dp" />
 
-        </android.support.v4.view.ViewPager>
-        <FrameLayout
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:layout_below="@id/photo_pager"
+            android:layout_marginTop="-20dp"
+            android:background="@drawable/round_boarder_bg" >
+
+            <ImageView
+                android:id="@+id/btn_play"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/play_icon" />
+
+            <LinearLayout
+                android:id="@+id/viewPagerCountDots"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical" >
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="55" >
-            <ScrollView
-                android:id="@+id/sv_help"
+            android:layout_height="match_parent"
+            android:layout_below="@id/photo_pager">
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/scroll"
                 android:layout_width="match_parent"
-                android:scrollbars="vertical"
                 android:layout_height="match_parent">
 
-                <LinearLayout
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
-                    android:orientation="vertical" >
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="10dp">
 
                     <TextView
-                        android:id="@+id/tv_title"
+                        android:id="@+id/txt_schema_content"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Gymstick hip shoulder rotation, mobility"
-                        android:textSize="25sp"
+                        android:layout_height="60dp"
+                        android:text="Movment preparation leg hip strech, upper body rotation"
+                        android:textSize="18sp"
                         android:gravity="center"
-                        android:textColor="@color/colorRed"
-                        android:layout_marginBottom="10dp" />
+                        android:textColor="@color/colorDetailItem"
+                        android:maxLines="2"
+                        android:layout_marginBottom="15dp"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginBottom="10dp"
                         android:weightSum="100" >
+
                         <TextView
-                            android:id="@+id/label_set"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="20"
+                            android:layout_height="wrap_content"
+                            android:text="@string/help_set"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/colorBlack"
-                            android:text="@string/help_set"/>
+                            android:textSize="14sp" />
+
                         <TextView
-                            android:id="@+id/label_reps"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="20"
+                            android:layout_height="wrap_content"
+                            android:text="@string/help_reps"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/colorBlack"
-                            android:text="@string/help_reps"/>
+                            android:textSize="14sp" />
+
                         <TextView
-                            android:id="@+id/label_tiem"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="20"
+                            android:layout_height="wrap_content"
+                            android:text="@string/help_time"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/colorBlack"
-                            android:text="@string/help_time"/>
+                            android:textSize="14sp" />
+
                         <TextView
-                            android:id="@+id/label_rest"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="20"
+                            android:layout_height="wrap_content"
+                            android:text="REST"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/colorBlack"
-                            android:text="@string/help_rest"/>
+                            android:textSize="14sp" />
+
                         <TextView
-                            android:id="@+id/label_kg"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="20"
+                            android:layout_height="wrap_content"
+                            android:text="KG"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/colorBlack"
-                            android:text="KG"/>
+                            android:textSize="14sp" />
+
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="10dp"
                         android:weightSum="100" >
+
                         <TextView
-                            android:id="@+id/tv_set"
+                            android:id="@+id/txt_set"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="20"
+                            android:layout_height="wrap_content"
+                            android:text="2"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/colorRed"
-                            android:text="1"/>
+                            android:textColor="@color/colorDotSelect"
+                            android:textSize="14sp" />
+
                         <TextView
-                            android:id="@+id/tv_reps"
+                            android:id="@+id/txt_reps"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="20"
+                            android:layout_height="wrap_content"
+                            android:text="1"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/colorRed"
-                            android:text="10"/>
+                            android:textColor="@color/colorDotSelect"
+                            android:textSize="14sp" />
+
                         <TextView
-                            android:id="@+id/tv_time"
+                            android:id="@+id/txt_time"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="20"
+                            android:layout_height="wrap_content"
+                            android:text="10 sec"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/colorRed"
-                            android:text="0 sec"/>
+                            android:textColor="@color/colorDotSelect"
+                            android:textSize="14sp" />
+
                         <TextView
-                            android:id="@+id/tv_rest"
+                            android:id="@+id/txt_rest"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="20"
+                            android:layout_height="wrap_content"
+                            android:text="5 sec"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/colorRed"
-                            android:text="10 sec"/>
+                            android:textColor="@color/colorDotSelect"
+                            android:textSize="14sp" />
+
                         <TextView
-                            android:id="@+id/tv_kg"
+                            android:id="@+id/txt_kg"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="20"
+                            android:layout_height="wrap_content"
+                            android:text="2x1 kg"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/colorRed"
-                            android:text="2x1 kg"/>
+                            android:textColor="@color/colorDotSelect"
+                            android:textSize="14sp" />
+
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="@color/colorDetailItem"
+                        android:layout_marginTop="15dp"
                         android:layout_marginBottom="20dp" />
 
                     <TextView
-                        android:id="@+id/label_starting_position"
+                        android:id="@+id/txt_starting_position"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="10dp"
                         android:text="@string/starting_position"
                         android:textSize="20sp"
@@ -169,15 +240,15 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_starting_position"
+                        android:id="@+id/txt_starting_position_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:text="Stand up straight and place your feet a little wider apart than shoulder-eidth. Grasp the gymstick as wide apart as possible with your arms in the air." />
 
                     <TextView
-                        android:id="@+id/label_movement"
+                        android:id="@+id/txt_movement"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -186,16 +257,17 @@
                         android:textSize="20sp"
                         android:textColor="@color/colorBlack"
                         android:textStyle="bold" />
+
                     <TextView
-                        android:id="@+id/tv_movment"
+                        android:id="@+id/txt_movment_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:text="Rotate the upper part of your body from left to right while holding the gumstick widthways high above your head. Every time you turn in, move your foot in the same drirection." />
 
                     <TextView
-                        android:id="@+id/label_points_remember"
+                        android:id="@+id/txt_points_remember"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -204,106 +276,27 @@
                         android:textSize="20sp"
                         android:textColor="@color/colorBlack"
                         android:textStyle="bold" />
+
                     <TextView
-                        android:id="@+id/tv_points_remember"
+                        android:id="@+id/txt_points_remember_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:textSize="14sp"
-                        android:text="Contract your abdominal muscles, keep your arms streched and turn your head in the same directions as your movement." />
+                        android:textSize="16sp"
+                        android:text="Contract your abdominal muscles, k" />
+
                 </LinearLayout>
 
-            </ScrollView>
+            </android.support.v4.widget.NestedScrollView>
+
             <com.sodabodyfit.moms.Common.DrawView
                 android:id="@+id/update_panel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone" />
-        </FrameLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="100" >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
-            android:gravity="center_vertical" >
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/back_icon" />
-            <TextView
-                android:id="@+id/tv_back"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="60"
-                android:textColor="@color/colorWhite"
-                android:textSize="16sp"/>
-            <ImageView
-                android:id="@+id/btn_alarm"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/alarm_icon" />
-            <ImageView
-                android:id="@+id/btn_favourites"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/favourites_icon" />
-            <ImageView
-                android:id="@+id/btn_plus"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/plus_icon" />
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="33" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6" >
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="center_vertical"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:background="@drawable/round_boarder_bg" >
-                <ImageView
-                    android:id="@+id/btn_play"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/play_icon"
-                    />
-                <LinearLayout
-                    android:id="@+id/viewPagerCountDots"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical" >
-
-                </LinearLayout>
-            </LinearLayout>
         </RelativeLayout>
-    </LinearLayout>
+
+    </RelativeLayout>
 
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>
