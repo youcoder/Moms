@@ -2,27 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="15dp"
+    android:layout_height="140dp"
+    android:gravity="bottom"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingBottom="5dp">
+    android:paddingBottom="7dp">
 
     <TextView
         android:id="@+id/txt_schema_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:text="Movment preparation leg hip strech, upper body rotation"
         android:textSize="18sp"
         android:gravity="center"
         android:textColor="@color/colorDetailItem"
-        android:layout_marginBottom="10dp"/>
+        android:maxLines="2"
+        android:layout_marginBottom="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="7dp"
+        android:layout_marginBottom="10dp"
         android:weightSum="100" >
 
         <TextView
