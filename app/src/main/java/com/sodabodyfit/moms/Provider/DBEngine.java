@@ -25,7 +25,7 @@ public class DBEngine {
     }
 
     // Workout
-    public ArrayList<Workout> getSimpleWorkoutList(int category_id) {
+    public ArrayList<Workout> getWorkoutList(int category_id) {
         ArrayList<Workout> workoutNameList = new ArrayList<Workout>();
 
         if(getSelLanguageId() == 1) // english
@@ -163,39 +163,6 @@ public class DBEngine {
         }
 
         return workout;
-    }
-
-    public String getWorkoutNameByExerciseId(int exerciseId) {
-        String wokoutName = "";
-
-        if(getSelLanguageId() == 1) //english
-        {
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
-            String selectQuery =  "SELECT w.title FROM Workout w JOIN Exercise e on w.id=e.workout_id WHERE e.id==?";
-
-            Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(exerciseId) });
-
-            if (cursor.moveToFirst())
-                wokoutName = cursor.getString(cursor.getColumnIndex(Workout.KEY_title));
-
-            cursor.close();
-            db.close();
-        }
-        else
-        {
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
-            String selectQuery =  "SELECT w.title_dut FROM Workout w JOIN Exercise e on w.id=e.workout_id WHERE e.id==?";
-
-            Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(exerciseId) });
-
-            if (cursor.moveToFirst())
-                wokoutName = cursor.getString(cursor.getColumnIndex(Workout.KEY_title_dut));
-
-            cursor.close();
-            db.close();
-        }
-
-        return wokoutName;
     }
 
     public boolean addMyWorkouts(Workout workout)

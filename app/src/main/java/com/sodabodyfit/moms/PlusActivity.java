@@ -13,6 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.sodabodyfit.moms.Common.ImageLoader;
+import com.sodabodyfit.moms.Models.Workout;
+import com.sodabodyfit.moms.Provider.DBEngine;
+
 import java.util.ArrayList;
 
 public class PlusActivity extends Activity implements View.OnClickListener {
@@ -27,14 +31,13 @@ public class PlusActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    ListView m_ListView = null;
-    ArrayList<WorkoutInfo> m_WorkoutInfoList = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_plus);
+
         init();
     }
 
@@ -46,21 +49,13 @@ public class PlusActivity extends Activity implements View.OnClickListener {
         LinearLayout llPlus = (LinearLayout)findViewById(R.id.new_workout);
         llPlus.setOnClickListener(this);
 
-        m_ListView = (ListView)findViewById(R.id.workout_list);
-        //for debug...
-        m_WorkoutInfoList = new ArrayList<WorkoutInfo>();
-        m_WorkoutInfoList.add(new WorkoutInfo(R.drawable.boxing, "workout 1"));
-        m_WorkoutInfoList.add(new WorkoutInfo(R.drawable.boxing, "workout 2"));
-        m_WorkoutInfoList.add(new WorkoutInfo(R.drawable.boxing, "workout 3"));
-        m_WorkoutInfoList.add(new WorkoutInfo(R.drawable.boxing, "workout 4"));
-        m_WorkoutInfoList.add(new WorkoutInfo(R.drawable.boxing, "workout 5"));
-        m_WorkoutInfoList.add(new WorkoutInfo(R.drawable.boxing, "workout 6"));
-        m_WorkoutInfoList.add(new WorkoutInfo(R.drawable.boxing, "workout 7"));
-        m_WorkoutInfoList.add(new WorkoutInfo(R.drawable.boxing, "workout 8"));
-        m_WorkoutInfoList.add(new WorkoutInfo(R.drawable.boxing, "workout 9"));
+        ListView listView = (ListView)findViewById(R.id.workout_list);
 
-        WorkoutListAdapter adapter = new WorkoutListAdapter(this, m_WorkoutInfoList);
-        m_ListView.setAdapter(adapter);
+        DBEngine dbEngine = new DBEngine(this);
+        ArrayList<Workout> lstWorkout = dbEngine.getWorkoutList(1);
+
+        WorkoutListAdapter adapter = new WorkoutListAdapter(this, lstWorkout);
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -91,9 +86,9 @@ public class PlusActivity extends Activity implements View.OnClickListener {
     public class WorkoutListAdapter extends BaseAdapter{
 
         private Context m_Context = null;
-        private ArrayList<WorkoutInfo> m_WorkoutInfoList = null;
+        private ArrayList<Workout> m_WorkoutInfoList = null;
 
-        public WorkoutListAdapter(Context context, ArrayList<WorkoutInfo> workoutInfoList)
+        public WorkoutListAdapter(Context context, ArrayList<Workout> workoutInfoList)
         {
             m_Context = context;
             m_WorkoutInfoList = workoutInfoList;
@@ -117,15 +112,14 @@ public class PlusActivity extends Activity implements View.OnClickListener {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            if(convertView == null)
-            {
+            if(convertView == null){
                 convertView = LayoutInflater.from(m_Context).inflate(R.layout.workout_item, parent, false);
             }
 
             TextView workoutName = (TextView)convertView.findViewById(R.id.tv_workout_name);
-            workoutName.setText(m_WorkoutInfoList.get(position)._WorkoutName);
+            workoutName.setText(m_WorkoutInfoList.get(position).title);
             ImageView workoutImage = (ImageView)convertView.findViewById(R.id.iv_workout_picture);
-            workoutImage.setImageResource(m_WorkoutInfoList.get(position)._ImgResId);
+            ImageLoader.LoadImage(m_Context, workoutImage, m_WorkoutInfoList.get(position).image);
 
             return convertView;
         }

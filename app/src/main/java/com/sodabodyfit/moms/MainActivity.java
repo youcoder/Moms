@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for(int i=0; i<8; i++) {
             DBEngine dbEngine = new DBEngine(this);
-            ArrayList<Workout> workouts = dbEngine.getSimpleWorkoutList(i);
+            ArrayList<Workout> workouts = dbEngine.getWorkoutList(i);
             cardInfos.add(new CardInfo(cardPhotoId[i], detailPhotoId[i], workouts));
         }
         MyPagerAdapter adapter = new MyPagerAdapter(this, cardInfos);
