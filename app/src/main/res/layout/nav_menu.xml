@@ -38,7 +38,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/settings_icon"
+            android:src="@drawable/ic_setting"
             android:adjustViewBounds="true"
             android:scaleType="fitXY" />
 
@@ -68,7 +68,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/disclaimer_icon"
+            android:src="@drawable/ic_disclaimer"
             android:adjustViewBounds="true"
             android:scaleType="fitXY" />
 
@@ -98,7 +98,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/logout_icon"
+            android:src="@drawable/ic_logout"
             android:adjustViewBounds="true"
             android:scaleType="fitXY" />
 
@@ -127,7 +127,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/lang_icon"
+            android:src="@drawable/ic_language"
             android:adjustViewBounds="true"
             android:scaleType="fitXY" />
 
