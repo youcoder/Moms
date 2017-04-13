@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.Models.Exercise;
@@ -165,7 +166,7 @@ public class ExerciseListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CHANGE_FAVOURITE) {
-//            if (resultCode == Activity.RESULT_OK) {
+            //if (resultCode == RESULT_OK) {
                 if(workoutId < 23) {
                     lstExercise = dbEngine.getExerciseList(workoutId);
                 }
@@ -179,7 +180,7 @@ public class ExerciseListActivity extends AppCompatActivity {
                     }
                 }
                 adapter.notifyDataSetChanged();
-//            }
+            //}
         }
     }
 }
