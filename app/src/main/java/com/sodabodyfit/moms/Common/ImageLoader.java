@@ -56,9 +56,6 @@ public class ImageLoader {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         try {
-
-                            Log.d("onResponse", "Response came from server");
-
                             if (response.body() != null) {
                                 String imageName = response.raw().request().url().queryParameterValue(0);
                                 boolean bSuccess = DownloadImage(response.body(), context, imageView, imageName);

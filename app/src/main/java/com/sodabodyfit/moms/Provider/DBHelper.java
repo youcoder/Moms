@@ -39,8 +39,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private void checkExists() {
 
         try {
-            Log.i(TAG, "checkExists()");
-
             File dbFile = new File(dbPath);
 
             if (!dbFile.exists()) {

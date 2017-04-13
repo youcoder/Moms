@@ -114,7 +114,8 @@ public class DBEngine {
                     Workout.KEY_title + "," +
                     Workout.KEY_info + "," +
                     Workout.KEY_infoDisplayed + "," +
-                    Workout.KEY_image +
+                    Workout.KEY_image + "," +
+                    Workout.KEY_exercises +
                     " FROM " + Workout.TABLE +
                     " WHERE " + Workout.KEY_ID + "=?";
 
@@ -130,6 +131,7 @@ public class DBEngine {
                 else
                     workout.infoDisplayed = false;
                 workout.image = cursor.getString(cursor.getColumnIndex(Workout.KEY_image));
+                workout.exercises = cursor.getString(cursor.getColumnIndex(Workout.KEY_exercises));
             }
             cursor.close();
             db.close();
@@ -141,7 +143,8 @@ public class DBEngine {
                     Workout.KEY_title_dut + "," +
                     Workout.KEY_info_dut + "," +
                     Workout.KEY_infoDisplayed + "," +
-                    Workout.KEY_image +
+                    Workout.KEY_image + "," +
+                    Workout.KEY_exercises +
                     " FROM " + Workout.TABLE +
                     " WHERE " + Workout.KEY_ID + "=?";
 
@@ -157,6 +160,7 @@ public class DBEngine {
                 else
                     workout.infoDisplayed = false;
                 workout.image = cursor.getString(cursor.getColumnIndex(Workout.KEY_image));
+                workout.exercises = cursor.getString(cursor.getColumnIndex(Workout.KEY_exercises));
             }
             cursor.close();
             db.close();
@@ -165,26 +169,60 @@ public class DBEngine {
         return workout;
     }
 
-    public boolean addMyWorkouts(Workout workout)
+    public Boolean IsExistWorkoutName(String workoutName) {
+        Boolean bExist = false;
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "";
+
+        if(getSelLanguageId() == 1) //english
+        {
+            selectQuery =  "SELECT " +
+                    "count(id) as WoCount " +
+                    " FROM " + Workout.TABLE +
+                    " WHERE " + Workout.KEY_title + "=?";
+        }
+        else
+        {
+            selectQuery =  "SELECT " +
+                    "count(id) as WoCount " +
+                    " FROM " + Workout.TABLE +
+                    " WHERE " + Workout.KEY_title_dut + "=?";
+        }
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[] { workoutName });
+
+        if (cursor.moveToFirst()) {
+            int nCount = cursor.getInt(cursor.getColumnIndex("WoCount"));
+            if(nCount > 0) bExist = true;
+        }
+
+        cursor.close();
+        db.close();
+
+        return bExist;
+    }
+
+    public boolean addWorkouts(Workout workout)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(Workout.KEY_category, 1);
+        values.put(Workout.KEY_category, workout.category_id);
         values.put(Workout.KEY_title, workout.title);
         values.put(Workout.KEY_title_dut, workout.title);
-        values.put(Workout.KEY_info, "");
-        values.put(Workout.KEY_info_dut, "");
-        values.put(Workout.KEY_infoDisplayed, false);
+        values.put(Workout.KEY_info, workout.info);
+        values.put(Workout.KEY_info_dut, workout.info);
+        values.put(Workout.KEY_infoDisplayed, workout.infoDisplayed);
         values.put(Workout.KEY_image, workout.image);
         values.put(Workout.KEY_exercises, workout.exercises);
-        db.insert(Workout.TABLE, Workout.KEY_exercises, values);
+        db.insert(Workout.TABLE, null, values);
         db.close();
 
         return  true;
     }
 
-    public boolean updateMyWorkouts(int workoutId, String title, String exercises)
+    public boolean updateWorkouts(int workoutId, String title, String exercises)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -379,7 +417,7 @@ public class DBEngine {
             Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(exercise_id) });
 
             if (cursor.moveToFirst()) {
-                exercise.workout_id = exercise_id;
+                exercise.exercise_id = exercise_id;
                 exercise.title = cursor.getString(cursor.getColumnIndex(Exercise.KEY_title));
                 exercise.initialPosition = cursor.getString(cursor.getColumnIndex(Exercise.KEY_initialPosition));
                 exercise.movement = cursor.getString(cursor.getColumnIndex(Exercise.KEY_movement));
@@ -419,7 +457,7 @@ public class DBEngine {
             Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(exercise_id) });
 
             if (cursor.moveToFirst()) {
-                exercise.workout_id = exercise_id;
+                exercise.exercise_id = exercise_id;
                 exercise.title = cursor.getString(cursor.getColumnIndex(Exercise.KEY_title_dut));
                 exercise.initialPosition = cursor.getString(cursor.getColumnIndex(Exercise.KEY_initialPosition_dut));
                 exercise.movement = cursor.getString(cursor.getColumnIndex(Exercise.KEY_movement_dut));
@@ -458,7 +496,7 @@ public class DBEngine {
 
             whereParams = null;
         }
-        else
+        else if(workout_id < 23)
         {
             selectQuery =  "SELECT " +
                     "count(id) as ExCount " +
@@ -467,11 +505,28 @@ public class DBEngine {
 
             whereParams = new String[] { String.valueOf(workout_id) };
         }
+        else
+        {
+            selectQuery =  "SELECT " +
+                    Workout.KEY_exercises +
+                    " FROM " + Workout.TABLE +
+                    " WHERE " + Workout.KEY_ID + "=?";
+
+            whereParams = new String[] { String.valueOf(workout_id) };
+        }
 
         Cursor cursor = db.rawQuery(selectQuery, whereParams);
 
-        if (cursor.moveToFirst())
-            nExCount = cursor.getInt(cursor.getColumnIndex("ExCount"));
+        if (cursor.moveToFirst()) {
+            if(workout_id < 23) {
+                nExCount = cursor.getInt(cursor.getColumnIndex("ExCount"));
+            }
+            else {
+                String exercises = cursor.getString(cursor.getColumnIndex(Workout.KEY_exercises));
+                String[] exerciseArray = exercises.split(",");
+                nExCount = exerciseArray.length;
+            }
+        }
 
         cursor.close();
         db.close();

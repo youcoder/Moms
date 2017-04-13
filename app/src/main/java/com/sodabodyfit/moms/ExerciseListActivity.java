@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.Models.Exercise;
+import com.sodabodyfit.moms.Models.Workout;
 import com.sodabodyfit.moms.Provider.DBEngine;
 
 import java.util.ArrayList;
@@ -50,7 +51,18 @@ public class ExerciseListActivity extends AppCompatActivity {
         tvTitle.setText(title);
 
         dbEngine = new DBEngine(this);
-        lstExercise = dbEngine.getExerciseList(workoutId);
+
+        if(workoutId < 23) {
+            lstExercise = dbEngine.getExerciseList(workoutId);
+        }
+        else{
+            Workout myWorkouts = dbEngine.getWorkoutInfo(workoutId);
+            String[] exerciseIds = myWorkouts.exercises.split(",");
+
+            for(int i = 0; i < exerciseIds.length; i++){
+                lstExercise.add(dbEngine.getExerciseInfo(Integer.parseInt(exerciseIds[i])));
+            }
+        }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -154,7 +166,18 @@ public class ExerciseListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CHANGE_FAVOURITE) {
 //            if (resultCode == Activity.RESULT_OK) {
-                lstExercise = dbEngine.getExerciseList(workoutId);
+                if(workoutId < 23) {
+                    lstExercise = dbEngine.getExerciseList(workoutId);
+                }
+                else{
+                    Workout myWorkouts = dbEngine.getWorkoutInfo(workoutId);
+                    String[] exerciseIds = myWorkouts.exercises.split(",");
+
+                    lstExercise.clear();
+                    for(int i = 0; i < exerciseIds.length; i++){
+                        lstExercise.add(dbEngine.getExerciseInfo(Integer.parseInt(exerciseIds[i])));
+                    }
+                }
                 adapter.notifyDataSetChanged();
 //            }
         }

@@ -8,64 +8,68 @@
     <uses-permission android:name="android.permissions.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
 
-
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:largeHeap="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
         <activity
             android:name=".RecoveryPasswordActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
         <activity
             android:name=".SignupActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
         <activity
             android:name=".ExpandWorkoutActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
         <activity
             android:name=".ExerciseListActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
         <activity
             android:name=".SchemasActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
         <activity
             android:name=".ExerciseActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
         <activity
             android:name=".PlusActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
         <activity
             android:name=".ChangePasswordActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
         <activity
             android:name=".DiscalmierActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
+        <activity
+            android:name=".AddWorkoutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
     </application>
 
 </manifest>

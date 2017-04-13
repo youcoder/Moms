@@ -159,7 +159,6 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         });
 
         String[] imageIds = exercise.images.split(",");
-
         photoViewPager.setOffscreenPageLimit(imageIds.length - 1);
 
         adapter = new ViewPagerAdapter(this, imageIds);
@@ -317,7 +316,8 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void onClickPlus() {
-        Intent intent = new Intent(this, PlusActivity.class);
+        Intent intent = new Intent(this, PlusActivity.class)
+                .putExtra("exercise", exercise);
         startActivity(intent);
     }
 
