@@ -69,8 +69,7 @@ public class ImageLoader {
                             e.printStackTrace();
                         }
                         finally {
-                            DBEngine dbEngine = new DBEngine(context);
-                            dbEngine.updateImagePath(imageId, false);
+                            ChangeImageStatus(context, imageId, false);
                         }
                     }
 
@@ -78,8 +77,7 @@ public class ImageLoader {
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("onFailure", t.toString());
 
-                        DBEngine dbEngine = new DBEngine(context);
-                        dbEngine.updateImagePath(imageId, false);
+                        ChangeImageStatus(context, imageId, false);
                     }
                 });
             }
@@ -88,9 +86,13 @@ public class ImageLoader {
             Log.d("LoadImage", e.toString());
         }
         finally {
-            DBEngine dbEngine = new DBEngine(context);
-            dbEngine.updateImagePath(imageId, false);
+            ChangeImageStatus(context, imageId, false);
         }
+    }
+
+    private static void ChangeImageStatus(Context context, String imageId, Boolean bDownloading){
+        DBEngine dbEngine = new DBEngine(context);
+        dbEngine.updateImagePath(imageId, bDownloading);
     }
 
     private static boolean DownloadImage(ResponseBody body, Context context, ImageView imageView, String fileName) {

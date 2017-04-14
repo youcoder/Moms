@@ -46,13 +46,13 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
     private Handler m_ExerciseHandler = null;
     private Runnable m_ExerciseRunnable = null;
-    public static final int EXERCISE_DELAY = 500;//1Sec
+    public static final int EXERCISE_DELAY = 1000;//1Sec
     private int m_ExerciseTime = 15;//in sec
     private int m_CurExerciseTime = 15;
 
     private Handler m_RestHandler = null;
     private Runnable m_RestRunnable = null;
-    public static final int REST_DELAY = 500;//1Sec
+    public static final int REST_DELAY = 1000;//1Sec
     private int m_RestTime = 10;//in sec
     private int m_CurRestTime = 10;
 
