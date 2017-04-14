@@ -113,10 +113,10 @@ public class MyPagerAdapter extends PagerAdapter {
         return view;
     }
 
-    @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }
+//    @Override
+//    public int getItemPosition(Object object) {
+//        return POSITION_UNCHANGED;
+//    }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
@@ -181,7 +181,4 @@ public class MyPagerAdapter extends PagerAdapter {
         return expandIndex != position;
     }
 
-    public void setData(ArrayList<CardInfo> list) {
-        this.listItems = list;
-    }
 }

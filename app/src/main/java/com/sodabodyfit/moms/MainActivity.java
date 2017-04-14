@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RadioButton rdoEnglish;
     private RadioButton rdoDutch;
     private ViewPager viewpager;
-    private MyPagerAdapter adapter;
+    private int curPage = 0;
 
     private int m_nSelLangId = 1;   //default = english
 
@@ -105,13 +105,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ArrayList<Workout> workouts = dbEngine.getWorkoutList(i);
             cardInfos.add(new CardInfo(cardPhotoId[i], detailPhotoId[i], workouts));
         }
-        adapter = new MyPagerAdapter(this, cardInfos);
+        MyPagerAdapter adapter = new MyPagerAdapter(this, cardInfos);
         viewpager.setAdapter(adapter);
 
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageSelected(int position) {
+                curPage = position;
             }
 
             @Override
@@ -133,15 +134,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onRestart() {
+        super.onRestart();
 
-        DBEngine dbEngine = new DBEngine(this);
-        ArrayList<Workout> workouts = dbEngine.getWorkoutList(1);
-        cardInfos.set(1, new CardInfo(cardPhotoId[1], detailPhotoId[1], workouts));
+        if (curPage == 1) {
+            DBEngine dbEngine = new DBEngine(this);
+            ArrayList<Workout> workouts = dbEngine.getWorkoutList(1);
+            cardInfos.set(1, new CardInfo(cardPhotoId[1], detailPhotoId[1], workouts));
 
-//        adapter.setData(cardInfos);
-        adapter.notifyDataSetChanged();
+            MyPagerAdapter adapter = new MyPagerAdapter(this, cardInfos);
+            viewpager.setAdapter(adapter);
+            viewpager.setCurrentItem(curPage);
+        }
     }
 
     @Override
