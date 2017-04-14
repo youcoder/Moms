@@ -1,95 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_plus"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="100"
-    tools:context="com.sodabodyfit.moms.AddWorkoutActivity">
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="#10000000">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ToolbarStyle" >
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:background="@color/colorDotNonSelect"
-        android:gravity="center_vertical"
-        android:weightSum="100"
-        android:paddingLeft="15dp" >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/tv_cancel"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:text="@string/cancel"
-            android:textColor="@color/colorRed"
-            android:textSize="18sp" />
+            android:paddingTop="15dp"
+            android:paddingBottom="5dp">
 
-        <TextView
-            android:id="@+id/tv_ok"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:text="OK"
-            android:textColor="@color/colorRed"
-            android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="TITLE"
+                android:textColor="@color/disableText"
+                android:layout_alignParentLeft="true"/>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:gravity="center_vertical"
-        android:paddingLeft="15dp" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="4/1/2017"
+                android:textColor="@color/disableText"
+                android:layout_alignParentRight="true"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:text="TITLE"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:text="21/01/2017"
-            android:textSize="14sp" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/add_workout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="15"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingLeft="15dp">
+        </RelativeLayout>
 
         <EditText
-            android:id="@+id/et_newtitle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="80"
-            android:hint="@string/new_workout"
+            android:id="@+id/edt_workout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="New Workout"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textColor="@color/colorRed"
-            android:textSize="18sp" />
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/img_exercise"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/boxing"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/txt_subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="text_test"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/colorNumber"
-        android:layout_margin="10dp" />
-    <ListView
-        android:id="@+id/exercise_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="77"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
 
-    </ListView>
+</android.support.design.widget.CoordinatorLayout>
 
-</LinearLayout>

@@ -70,7 +70,9 @@
             android:name=".AddWorkoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoTitle" />
-        <activity android:name=".EditMyWorkoutActivity"></activity>
+        <activity android:name=".EditMyWorkoutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
     </application>
 
 </manifest>

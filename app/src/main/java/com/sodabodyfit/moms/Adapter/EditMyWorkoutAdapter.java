@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.sodabodyfit.moms.Models.Exercise;
 import com.sodabodyfit.moms.R;
 
@@ -43,6 +44,7 @@ public class EditMyWorkoutAdapter extends RecyclerView.Adapter<EditMyWorkoutAdap
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Exercise item = lstExercise.get(position);
+        Glide.with(context).load(item.images).placeholder(R.drawable.loading).into(holder.ivExercise);
         holder.tvSubject.setText(item.title);
         holder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,12 +80,13 @@ public class EditMyWorkoutAdapter extends RecyclerView.Adapter<EditMyWorkoutAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvSubject;
-        ImageView ivDelete;
+        ImageView ivDelete, ivExercise;
 
         public ViewHolder(View v) {
             super(v);
             tvSubject = (TextView) v.findViewById(R.id.txt_subject);
             ivDelete = (ImageView) v.findViewById(R.id.img_delete);
+            ivExercise = (ImageView) v.findViewById(R.id.img_exercise);
         }
     }
 }

@@ -10,6 +10,10 @@
 
     <style name="AppThemeNoTitle" parent="Theme.AppCompat.Light.NoActionBar" />
 
+    <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/colorBlack</item>
+    </style>
+
     <style name="TextLabel">
         <item name="android:textColorHint">@color/colorText</item>
         <item name="colorAccent">@color/colorAccent</item>
