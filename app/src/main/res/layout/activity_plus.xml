@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_plus"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="100"
-    tools:context="com.sodabodyfit.moms.PlusActivity">
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="#10000000">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ToolbarStyle" >
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Add to one Workout"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/ll_add_workout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:background="@color/colorDotNonSelect"
-        android:gravity="center_vertical"
-        android:weightSum="100"
-        android:paddingLeft="5dp" >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/tv_cancel"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:text="@string/cancel"
-            android:textColor="@color/colorRed"
-            android:textSize="18sp" />
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="60"
-            android:text="@string/add_to_one_workout"
-            android:gravity="center"
-            android:textSize="18sp"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_plus_red"
+                android:textColor="@color/disableText"/>
 
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/new_workout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="15"
-        android:orientation="horizontal"
-        android:gravity="center_vertical" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:text="New Workout"
+                android:textColor="@color/colorRed"
+                android:layout_alignParentRight="true"/>
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/plus_icon_select" />
-        <TextView
-            android:layout_width="0dp"
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="80"
-            android:text="@string/new_workout"
-            android:gravity="center_vertical"
-            android:textColor="@color/colorRed"
-            android:textSize="16sp" />
+            android:layout_marginTop="10dp"/>
+
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/colorNumber"
-        android:layout_margin="10dp" />
-    <ListView
-        android:id="@+id/workout_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="77"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
 
-    </ListView>
+</android.support.design.widget.CoordinatorLayout>
 
-</LinearLayout>

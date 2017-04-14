@@ -1,20 +1,25 @@
 package com.sodabodyfit.moms;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import com.sodabodyfit.moms.Adapter.MyWorkoutAdapter;
+import com.sodabodyfit.moms.Common.DividerItemDecoration;
 import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.Models.Exercise;
 import com.sodabodyfit.moms.Models.Workout;
@@ -22,106 +27,64 @@ import com.sodabodyfit.moms.Provider.DBEngine;
 
 import java.util.ArrayList;
 
-public class PlusActivity extends AppCompatActivity implements View.OnClickListener {
+public class PlusActivity extends AppCompatActivity {
 
-    private Exercise m_Exercise;
+    private Exercise exercise;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_plus);
 
-        init();
-    }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-    private void init()
-    {
         Intent intent = getIntent();
-        m_Exercise = intent.getParcelableExtra("exercise");
+        exercise = intent.getParcelableExtra("exercise");
 
-        TextView tvCancel = (TextView)findViewById(R.id.tv_cancel);
-        tvCancel.setOnClickListener(this);
+        LinearLayout llPlus = (LinearLayout)findViewById(R.id.ll_add_workout);
+        llPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlusActivity.this, AddWorkoutActivity.class);
+                intent.putExtra("exercise", exercise);
+                startActivity(intent);
+                PlusActivity.this.finish();
+            }
+        });
 
-        LinearLayout llPlus = (LinearLayout)findViewById(R.id.new_workout);
-        llPlus.setOnClickListener(this);
-
-        ListView listView = (ListView)findViewById(R.id.workout_list);
 
         DBEngine dbEngine = new DBEngine(this);
         ArrayList<Workout> lstWorkout = dbEngine.getWorkoutList(1);
 
-        WorkoutListAdapter adapter = new WorkoutListAdapter(this, lstWorkout);
-        listView.setAdapter(adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
+        recycler.setLayoutManager(layoutManager);
+        recycler.addItemDecoration(new DividerItemDecoration(this));
+
+        MyWorkoutAdapter adapter = new MyWorkoutAdapter(PlusActivity.this, lstWorkout);
+        recycler.setAdapter(adapter);
     }
 
     @Override
-    public void onClick(View v) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        int nResId = v.getId();
-        switch (nResId)
-        {
-            case R.id.tv_cancel:
-                onClickCancel();
-                break;
-            case R.id.new_workout:
-                onClickPlus();
-                break;
-        }
+        return true;
     }
 
-    private void onClickPlus()
-    {
-        Intent intent = new Intent(this, AddWorkoutActivity.class)
-                .putExtra("exercise", m_Exercise);
-        startActivity(intent);
-    }
-
-    private void onClickCancel()
-    {
-        onBackPressed();
-    }
-
-    public class WorkoutListAdapter extends BaseAdapter{
-
-        private Context m_Context = null;
-        private ArrayList<Workout> m_WorkoutInfoList = null;
-
-        public WorkoutListAdapter(Context context, ArrayList<Workout> workoutInfoList)
-        {
-            m_Context = context;
-            m_WorkoutInfoList = workoutInfoList;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            PlusActivity.this.finish();
         }
-
-        @Override
-        public int getCount() {
-            return m_WorkoutInfoList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return m_WorkoutInfoList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            if(convertView == null){
-                convertView = LayoutInflater.from(m_Context).inflate(R.layout.workout_item, parent, false);
-            }
-
-            TextView workoutName = (TextView)convertView.findViewById(R.id.tv_workout_name);
-            workoutName.setText(m_WorkoutInfoList.get(position).title);
-            ImageView workoutImage = (ImageView)convertView.findViewById(R.id.iv_workout_picture);
-            ImageLoader.LoadImage(m_Context, workoutImage, m_WorkoutInfoList.get(position).image);
-
-            return convertView;
-        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

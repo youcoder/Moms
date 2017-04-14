@@ -1,6 +1,5 @@
 package com.sodabodyfit.moms;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,8 +29,6 @@ public class AddWorkoutActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_workout);
 
         init();
@@ -138,12 +134,12 @@ public class AddWorkoutActivity extends AppCompatActivity implements View.OnClic
         public View getView(int position, View convertView, ViewGroup parent) {
 
             if(convertView == null){
-                convertView = LayoutInflater.from(m_Context).inflate(R.layout.workout_item, parent, false);
+                convertView = LayoutInflater.from(m_Context).inflate(R.layout.list_my_workout, parent, false);
             }
 
-            TextView workoutName = (TextView)convertView.findViewById(R.id.tv_workout_name);
+            TextView workoutName = (TextView)convertView.findViewById(R.id.txt_subject);
             workoutName.setText(m_ExerciseList.get(position).title);
-            ImageView workoutImage = (ImageView)convertView.findViewById(R.id.iv_workout_picture);
+            ImageView workoutImage = (ImageView)convertView.findViewById(R.id.img_exercise);
 
             String[] imageIds = m_ExerciseList.get(position).images.split(",");
             if(imageIds.length > 0)
