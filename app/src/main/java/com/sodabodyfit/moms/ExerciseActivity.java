@@ -15,6 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -211,9 +214,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-
-    private void startRest()
-    {
+    private void startRest() {
         m_isRest = true;
         m_CurRestTime = m_RestTime;
 
@@ -223,8 +224,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         stopPlay();
     }
 
-    private void countDownRest()
-    {
+    private void countDownRest() {
         m_CurRestTime--;
         updatePanel.setYPos(m_CurRestTime);
     }
@@ -240,16 +240,13 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
             stopPlay();
             updatePanel.ExitDraw();
             m_CurSet = m_Set;
-        }
-        else
-        {
+        } else {
             //repeat
             startExercise();
         }
     }
 
-    private void startExercise()
-    {
+    private void startExercise() {
         m_CurExerciseTime = m_ExerciseTime;
         updatePanel.setTimeCount(m_CurExerciseTime, "EXERCISE");
         updatePanel.reset();
@@ -258,20 +255,17 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         startPlay();
     }
 
-    private void countDownExercise()
-    {
+    private void countDownExercise() {
         m_CurExerciseTime--;
         updatePanel.setYPos(m_CurExerciseTime);
     }
 
-    private void stopExercise()
-    {
+    private void stopExercise() {
         m_ExerciseHandler.removeCallbacks(m_ExerciseRunnable);
         startRest();
     }
 
-    private void updatePage()
-    {
+    private void updatePage() {
         photoViewPager.setCurrentItem(m_CurrentPageNum, false);
         m_CurrentPageNum++;
         if(m_CurrentPageNum > pageCount)
@@ -305,8 +299,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
         int nResId  = v.getId();
 
-        switch (nResId)
-        {
+        switch (nResId) {
             case R.id.img_back:
                 onBackPressed();
                 break;
@@ -333,13 +326,10 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void onClickFavourite() {
-        if(m_isFavourite)
-        {
+        if(m_isFavourite) {
             m_isFavourite = false;
             ivFavourite.setImageResource(R.drawable.ic_unvote);
-        }
-        else
-        {
+        } else {
             m_isFavourite = true;
             ivFavourite.setImageResource(R.drawable.ic_vote);
         }
@@ -349,16 +339,13 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void onClickAlarm() {
-        if(m_isAlarm)
-        {
+        if(m_isAlarm) {
             // play
             m_isAlarm = false;
             ivExercise.setImageResource(R.drawable.ic_stop_exercise);
             updatePanel.setVisibility(View.GONE);
             stopRest();
-        }
-        else
-        {
+        } else {
             // stop
             m_isAlarm = true;
             ivExercise.setImageResource(R.drawable.ic_start_exercise);
@@ -384,7 +371,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private  void startPlay(){
+    private  void startPlay() {
         m_isPlay = true;
         m_PlayHandler.postDelayed(m_PlayRunnable, PLAY_DELAY);
         ivPlay.setImageResource(R.drawable.pause_icon);
@@ -396,15 +383,12 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void onClickPlay() {
-        if(m_isPlay)
-        {
+        if(m_isPlay) {
             if(m_isAlarm)
                 return;
             else
                 stopPlay();
-        }
-        else
-        {
+        } else {
             if(m_isRest) return;;
 
             if(m_isAlarm)
@@ -419,8 +403,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         private Context mContext;
         private String[] mImageIds = null;
 
-        public ViewPagerAdapter(Context context, String[] imageIds)
-        {
+        public ViewPagerAdapter(Context context, String[] imageIds) {
             mContext = context;
             mImageIds = imageIds;
         }

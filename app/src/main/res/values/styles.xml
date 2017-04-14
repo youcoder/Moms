@@ -12,6 +12,7 @@
 
     <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/colorBlack</item>
+        <item name="actionMenuTextColor">@color/colorBlack</item>
     </style>
 
     <style name="TextLabel">

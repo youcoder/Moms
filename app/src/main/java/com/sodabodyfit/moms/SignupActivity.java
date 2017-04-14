@@ -2,8 +2,10 @@ package com.sodabodyfit.moms;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -198,11 +202,10 @@ public class SignupActivity extends AppCompatActivity implements ViewPager.OnPag
                         } else {
                             experience = "Beginner";
                         }
+//                        if (validate()) {
+                            acceptDialog();
+//                        }
 
-                        showDialog();
-                        if (validate()) {
-//                            signUp();
-                        }
                     }
                 });
             }
@@ -275,7 +278,7 @@ public class SignupActivity extends AppCompatActivity implements ViewPager.OnPag
                 if(response.isSuccessful()) {
                     progress.dismiss();
                     UserInfo obj = response.body();
-                    showDialog();
+                    SignupActivity.this.finish();
                 } else {
                     progress.dismiss();
                     Toast.makeText(SignupActivity.this, response.message(), Toast.LENGTH_SHORT).show();
@@ -341,21 +344,35 @@ public class SignupActivity extends AppCompatActivity implements ViewPager.OnPag
         }
     }
 
-    private void showDialog() {
+    private void acceptDialog() {
 
-        MaterialDialog mDialog = new MaterialDialog.Builder(this)
-                .title("Disclaimer")
-                .titleColor(0xFF603F)
+        final MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .customView(R.layout.dialog_disclaimer, true)
-                .positiveText("OK")
                 .cancelable(false)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        SignupActivity.this.finish();
-                    }
-                }).build();
+                .build();
 
-        mDialog.show();
+        final Button btContinue = (Button)dialog.getCustomView().findViewById(R.id.btn_continue);
+        btContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+//                signUp();
+            }
+        });
+        CheckBox cbAccept = (CheckBox)dialog.getCustomView().findViewById(R.id.chk_accept);
+        cbAccept.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    btContinue.setBackgroundColor(ContextCompat.getColor(SignupActivity.this, R.color.buttonEnable));
+                    btContinue.setEnabled(true);
+                } else {
+                    btContinue.setBackgroundColor(ContextCompat.getColor(SignupActivity.this, R.color.buttonDisable));
+                    btContinue.setEnabled(false);
+                }
+            }
+        });
+
+        dialog.show();
     }
 }
