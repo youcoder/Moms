@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,9 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
                 deleteAllExercise();
             }
         });
+        EditText edtWorkoutTitle = (EditText)findViewById(R.id.edt_workout_title);
+        edtWorkoutTitle.setText(title);
+
         initListeners();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

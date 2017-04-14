@@ -32,6 +32,7 @@ public class ExerciseListActivity extends AppCompatActivity {
     private static int CHANGE_FAVOURITE = 101;
     private ArrayList<Exercise> lstExercise = new ArrayList<Exercise>();
     private int workoutId;
+    private String workoutTitle;
     private DBEngine dbEngine;
     private ExerciseListAdapter adapter;
 
@@ -45,11 +46,11 @@ public class ExerciseListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        String title = intent.getStringExtra("workout_title");
+        workoutTitle = intent.getStringExtra("workout_title");
         workoutId = intent.getIntExtra("workout_id", -1);
 
         TextView tvTitle = (TextView)findViewById(R.id.txt_title);
-        tvTitle.setText(title);
+        tvTitle.setText(workoutTitle);
 
         dbEngine = new DBEngine(this);
 
@@ -83,6 +84,10 @@ public class ExerciseListActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         getMenuInflater().inflate(R.menu.menu_exercise_list, menu);
 
+        if (workoutId == 23) {
+            MenuItem item = menu.findItem(R.id.action_edit);
+            item.setVisible(false);
+        }
         return true;
     }
 
@@ -95,7 +100,12 @@ public class ExerciseListActivity extends AppCompatActivity {
             intent.putExtra("workout_id", workoutId);
             intent.putExtra("exercise", lstExercise);
             startActivity(intent);
-        }else if (id == android.R.id.home) {
+        } else if(id == R.id.action_edit) {
+            Intent intent = new Intent(ExerciseListActivity.this, EditMyWorkoutActivity.class);
+            intent.putExtra("workout_id", workoutId);
+            intent.putExtra("workout_title", workoutTitle);
+            startActivity(intent);
+        } else if (id == android.R.id.home) {
             ExerciseListActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);

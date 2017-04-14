@@ -55,9 +55,9 @@
         </RelativeLayout>
 
         <EditText
+            android:id="@+id/edt_workout_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Workout-1"
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="20sp"
