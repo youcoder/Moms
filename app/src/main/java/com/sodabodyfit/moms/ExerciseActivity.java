@@ -394,7 +394,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         m_PlayHandler.removeCallbacks(m_PlayRunnable);
         ivPlay.setImageResource(R.drawable.play_icon);
     }
-    
+
     private void onClickPlay() {
         if(m_isPlay)
         {
