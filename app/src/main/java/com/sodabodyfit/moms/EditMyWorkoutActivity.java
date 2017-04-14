@@ -21,13 +21,16 @@ import com.sodabodyfit.moms.Models.Exercise;
 import com.sodabodyfit.moms.Models.Workout;
 import com.sodabodyfit.moms.Provider.DBEngine;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EditMyWorkoutActivity extends AppCompatActivity {
 
     private ArrayList<Exercise> lstExercise = new ArrayList<Exercise>();
     private CdsItemTouchCallback.ItemDragCompleteListener mItemDragCompleteListener;
     private int workoutId;
+    private EditMyWorkoutAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +41,10 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        String title = intent.getStringExtra("workout_title");
         workoutId = intent.getIntExtra("workout_id", -1);
+
+        DBEngine dbEngine = new DBEngine(this);
+        Workout myWorkout = dbEngine.getWorkoutInfo(workoutId);
 
         TextView tvDeleteAll = (TextView)findViewById(R.id.txt_delete_all);
         tvDeleteAll.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +54,10 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
             }
         });
         EditText edtWorkoutTitle = (EditText)findViewById(R.id.edt_workout_title);
-        edtWorkoutTitle.setText(title);
+        edtWorkoutTitle.setText(myWorkout.title);
+
+        TextView tvDate = (TextView)findViewById(R.id.tv_createdate);
+        tvDate.setText(myWorkout.creationDate);
 
         initListeners();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -58,15 +66,15 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(layoutManager);
 
-        DBEngine dbEngine = new DBEngine(this);
-        Workout myWorkout = dbEngine.getWorkoutInfo(workoutId);
-        String[] exerciseIds = myWorkout.exercises.split(",");
+        if(!myWorkout.exercises.isEmpty()) {
+            String[] exerciseIds = myWorkout.exercises.split(",");
 
-        for(int i = 0; i < exerciseIds.length; i++){
-            lstExercise.add(dbEngine.getExerciseInfo(Integer.parseInt(exerciseIds[i])));
+            for (int i = 0; i < exerciseIds.length; i++) {
+                lstExercise.add(dbEngine.getExerciseInfo(Integer.parseInt(exerciseIds[i])));
+            }
         }
 
-        EditMyWorkoutAdapter adapter = new EditMyWorkoutAdapter(EditMyWorkoutActivity.this, workoutId, lstExercise);
+        adapter = new EditMyWorkoutAdapter(EditMyWorkoutActivity.this, workoutId, lstExercise);
         recycler.setAdapter(adapter);
 
         recycler.enableItemDrag();
@@ -87,6 +95,10 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
     private void deleteAllExercise() {
         DBEngine dbEngine = new DBEngine(this);
         dbEngine.updateWorkouts(workoutId, "", "");
+
+        Toast.makeText(EditMyWorkoutActivity.this, "All exercise deleted!", Toast.LENGTH_SHORT).show();
+
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -115,6 +127,14 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
     }
 
     private void SaveMyworkout() {
+        EditText edtWorkoutTitle = (EditText)findViewById(R.id.edt_workout_title);
+        String title = edtWorkoutTitle.getText().toString();
 
+        if(!title.isEmpty()) {
+            DBEngine dbEngine = new DBEngine(this);
+            dbEngine.updateWorkouts(workoutId, title, "");
+        } else {
+            Toast.makeText(EditMyWorkoutActivity.this, "The title is empty.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

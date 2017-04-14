@@ -18,6 +18,9 @@ import com.sodabodyfit.moms.Models.Exercise;
 import com.sodabodyfit.moms.Models.Workout;
 import com.sodabodyfit.moms.Provider.DBEngine;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AddWorkoutActivity extends AppCompatActivity {
 
     private Exercise exercise;
@@ -40,11 +43,15 @@ public class AddWorkoutActivity extends AppCompatActivity {
         TextView tvExerciseTitle = (TextView)findViewById(R.id.txt_subject);
         tvExerciseTitle.setText(exercise.title);
 
+        TextView tvDate = (TextView)findViewById(R.id.tv_createdate);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        String todayDate = sdf.format(new Date());
+        tvDate.setText(todayDate);
+
         ImageView ivExercise = (ImageView)findViewById(R.id.img_exercise);
         String[] imageIds = exercise.images.split(",");
         if(imageIds.length > 0)
             ImageLoader.LoadImage(AddWorkoutActivity.this, ivExercise, imageIds[0]);
-
     }
 
     @Override
@@ -89,6 +96,10 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 newMyWorkout.exercises = String.valueOf(exercise.exercise_id);
                 String[] imageIds = exercise.images.split(",");
                 if (imageIds.length > 0) newMyWorkout.image = imageIds[0];
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                String todayDate = sdf.format(new Date());
+                newMyWorkout.creationDate = todayDate;
 
                 dbEngine.addWorkouts(newMyWorkout);
 

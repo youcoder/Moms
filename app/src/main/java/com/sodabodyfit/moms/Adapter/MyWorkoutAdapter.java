@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.sodabodyfit.moms.AddWorkoutActivity;
 import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.Models.Workout;
 import com.sodabodyfit.moms.Provider.DBEngine;
@@ -29,10 +31,12 @@ public class MyWorkoutAdapter extends RecyclerView.Adapter<MyWorkoutAdapter.View
 
     Context context;
     ArrayList<Workout> listContent = new ArrayList<Workout>();
+    int exercise_id;
 
-    public MyWorkoutAdapter(Context context, ArrayList<Workout> listContent) {
+    public MyWorkoutAdapter(Context context, ArrayList<Workout> listContent, int exercise_id) {
         this.context = context;
         this.listContent = listContent;
+        this.exercise_id = exercise_id;
     }
 
     @Override
@@ -49,22 +53,34 @@ public class MyWorkoutAdapter extends RecyclerView.Adapter<MyWorkoutAdapter.View
         holder.tvSubject.setText(item.title);
         ImageLoader.LoadImage(context, holder.ivExercise, item.image);
 
-        holder.ivExercise.setOnClickListener(new View.OnClickListener() {
+        holder.llMyWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showExercise(item);
+                AddExerciseToWorkout(item.workout_id);
             }
         });
+
     }
 
-    private void AddExerciseToWorkout(Workout myWorkout, int exercise_id){
+    private Boolean AddExerciseToWorkout(int workout_id){
+        DBEngine dbEngine = new DBEngine(context);
+        Workout myWorkout = dbEngine.getWorkoutInfo(workout_id);
         String newImages = myWorkout.exercises;
 
-        if(newImages == "") newImages = String.valueOf(exercise_id);
+        if(newImages.contains(String.valueOf(exercise_id))) {
+            Toast.makeText(context, "The selected workout already contains the exercise", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(newImages.isEmpty()) newImages = String.valueOf(exercise_id);
         else newImages += "," + String.valueOf(exercise_id);
 
-        DBEngine dbEngine = new DBEngine(context);
-        dbEngine.updateWorkouts(myWorkout.workout_id, "", newImages);
+
+        boolean bResult = dbEngine.updateWorkouts(myWorkout.workout_id, "", newImages);
+
+        if(bResult) Toast.makeText(context, "The exercise has added to the selected workout", Toast.LENGTH_SHORT).show();
+
+        return bResult;
     }
 
     @Override
@@ -75,11 +91,13 @@ public class MyWorkoutAdapter extends RecyclerView.Adapter<MyWorkoutAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivExercise ;
         TextView tvSubject;
+        LinearLayout llMyWorkout;
 
         public ViewHolder(View v) {
             super(v);
             ivExercise = (ImageView) v.findViewById(R.id.img_exercise);
             tvSubject = (TextView) v.findViewById(R.id.txt_subject);
+            llMyWorkout = (LinearLayout) v.findViewById(R.id.ll_workout);
         }
     }
 }

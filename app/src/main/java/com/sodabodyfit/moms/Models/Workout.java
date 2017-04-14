@@ -18,6 +18,7 @@ public class Workout implements Parcelable {
     public static final String KEY_infoDisplayed = "infoDisplayed";
     public static final String KEY_image = "image";
     public static final String KEY_exercises = "exercises";
+    public static final String KEY_creationDate = "creationDate";
 
     // property
     public int workout_id;
@@ -27,6 +28,7 @@ public class Workout implements Parcelable {
     public Boolean infoDisplayed;
     public String image;
     public String exercises;
+    public String creationDate;
 
     @Override
     public int describeContents() {
@@ -42,6 +44,7 @@ public class Workout implements Parcelable {
         dest.writeValue(this.infoDisplayed);
         dest.writeString(this.image);
         dest.writeString(this.exercises);
+        dest.writeString(this.creationDate);
     }
 
     public Workout() {
@@ -55,6 +58,7 @@ public class Workout implements Parcelable {
         this.infoDisplayed = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.image = in.readString();
         this.exercises = in.readString();
+        this.creationDate = in.readString();
     }
 
     public static final Parcelable.Creator<Workout> CREATOR = new Parcelable.Creator<Workout>() {

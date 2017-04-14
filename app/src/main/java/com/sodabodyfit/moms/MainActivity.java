@@ -31,8 +31,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RadioButton rdoEnglish;
     private RadioButton rdoDutch;
     private ViewPager viewpager;
+    private MyPagerAdapter adapter;
 
     private int m_nSelLangId = 1;   //default = english
+
+    private ArrayList<CardInfo> cardInfos = new ArrayList<CardInfo>();
+    int[] cardPhotoId = { R.drawable.mom_0, R.drawable.mom_1, R.drawable.mom_2,
+            R.drawable.mom_3, R.drawable.mom_4, R.drawable.mom_5,
+            R.drawable.mom_6, R.drawable.mom_7};
+
+    int[] detailPhotoId = { R.drawable.mom_d0, R.drawable.mom_d1, R.drawable.mom_d2,
+            R.drawable.mom_d3, R.drawable.mom_d4, R.drawable.mom_d5,
+            R.drawable.mom_d6, R.drawable.mom_d7};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,22 +100,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewpager.setOffscreenPageLimit(1);
         viewpager.setPageTransformer(false, new CarouselEffectTransformer(this)); // Set transformer
 
-        ArrayList<CardInfo> cardInfos = new ArrayList<CardInfo>();
-
-        int[] cardPhotoId = { R.drawable.mom_0, R.drawable.mom_1, R.drawable.mom_2,
-                R.drawable.mom_3, R.drawable.mom_4, R.drawable.mom_5,
-                R.drawable.mom_6, R.drawable.mom_7};
-
-        int[] detailPhotoId = { R.drawable.mom_d0, R.drawable.mom_d1, R.drawable.mom_d2,
-                R.drawable.mom_d3, R.drawable.mom_d4, R.drawable.mom_d5,
-                R.drawable.mom_d6, R.drawable.mom_d7};
-
         for(int i=0; i<8; i++) {
             DBEngine dbEngine = new DBEngine(this);
             ArrayList<Workout> workouts = dbEngine.getWorkoutList(i);
             cardInfos.add(new CardInfo(cardPhotoId[i], detailPhotoId[i], workouts));
         }
-        MyPagerAdapter adapter = new MyPagerAdapter(this, cardInfos);
+        adapter = new MyPagerAdapter(this, cardInfos);
         viewpager.setAdapter(adapter);
 
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -130,6 +130,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             rdoEnglish.setChecked(true);
         else
             rdoDutch.setChecked(true);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        DBEngine dbEngine = new DBEngine(this);
+        ArrayList<Workout> workouts = dbEngine.getWorkoutList(1);
+        cardInfos.set(1, new CardInfo(cardPhotoId[1], detailPhotoId[1], workouts));
+
+        adapter.setData(cardInfos);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

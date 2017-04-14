@@ -32,9 +32,9 @@ public class ExerciseListActivity extends AppCompatActivity {
     private static int CHANGE_FAVOURITE = 101;
     private ArrayList<Exercise> lstExercise = new ArrayList<Exercise>();
     private int workoutId;
-    private String workoutTitle;
     private DBEngine dbEngine;
     private ExerciseListAdapter adapter;
+    private TextView tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,23 +46,25 @@ public class ExerciseListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        workoutTitle = intent.getStringExtra("workout_title");
         workoutId = intent.getIntExtra("workout_id", -1);
+        String title = intent.getStringExtra("workout_title");
 
-        TextView tvTitle = (TextView)findViewById(R.id.txt_title);
-        tvTitle.setText(workoutTitle);
+        tvTitle = (TextView)findViewById(R.id.txt_title);
+        tvTitle.setText(title);
 
         dbEngine = new DBEngine(this);
-
-        if(workoutId < 23) {
+        if(workoutId < 23) {    // common workouts
             lstExercise = dbEngine.getExerciseList(workoutId);
         }
-        else{
-            Workout myWorkouts = dbEngine.getWorkoutInfo(workoutId);
-            String[] exerciseIds = myWorkouts.exercises.split(",");
+        else{   // if MyWorkouts
+            Workout myWorkout = dbEngine.getWorkoutInfo(workoutId);
 
-            for(int i = 0; i < exerciseIds.length; i++){
-                lstExercise.add(dbEngine.getExerciseInfo(Integer.parseInt(exerciseIds[i])));
+            if(!myWorkout.exercises.isEmpty()) {
+                String[] exerciseIds = myWorkout.exercises.split(",");
+
+                for (int i = 0; i < exerciseIds.length; i++) {
+                    lstExercise.add(dbEngine.getExerciseInfo(Integer.parseInt(exerciseIds[i])));
+                }
             }
         }
 
@@ -84,7 +86,10 @@ public class ExerciseListActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         getMenuInflater().inflate(R.menu.menu_exercise_list, menu);
 
-        if (workoutId < 23) {
+        DBEngine dbEngine = new DBEngine(this);
+        Workout myWorkout = dbEngine.getWorkoutInfo(workoutId);
+
+        if (workoutId < 23 || (myWorkout.exercises != null && myWorkout.exercises.isEmpty())) {
             MenuItem item = menu.findItem(R.id.action_edit);
             item.setVisible(false);
         }
@@ -103,8 +108,7 @@ public class ExerciseListActivity extends AppCompatActivity {
         } else if(id == R.id.action_edit) {
             Intent intent = new Intent(ExerciseListActivity.this, EditMyWorkoutActivity.class);
             intent.putExtra("workout_id", workoutId);
-            intent.putExtra("workout_title", workoutTitle);
-            startActivity(intent);
+            startActivityForResult(intent, CHANGE_FAVOURITE);
         } else if (id == android.R.id.home) {
             ExerciseListActivity.this.finish();
         }
@@ -181,14 +185,22 @@ public class ExerciseListActivity extends AppCompatActivity {
                     lstExercise = dbEngine.getExerciseList(workoutId);
                 }
                 else{
-                    Workout myWorkouts = dbEngine.getWorkoutInfo(workoutId);
-                    String[] exerciseIds = myWorkouts.exercises.split(",");
-
                     lstExercise.clear();
-                    for(int i = 0; i < exerciseIds.length; i++){
-                        lstExercise.add(dbEngine.getExerciseInfo(Integer.parseInt(exerciseIds[i])));
+
+                    Workout myWorkouts = dbEngine.getWorkoutInfo(workoutId);
+                    if(!myWorkouts.exercises.isEmpty()) {
+                        String[] exerciseIds = myWorkouts.exercises.split(",");
+
+                        for (int i = 0; i < exerciseIds.length; i++) {
+                            lstExercise.add(dbEngine.getExerciseInfo(Integer.parseInt(exerciseIds[i])));
+                        }
                     }
                 }
+
+                dbEngine = new DBEngine(this);
+                Workout workout = dbEngine.getWorkoutInfo(workoutId);
+                tvTitle.setText(workout.title);
+
                 adapter.notifyDataSetChanged();
             //}
         }

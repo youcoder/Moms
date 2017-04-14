@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.gaurav.cdsrecyclerview.CdsRecyclerViewAdapter;
 import com.sodabodyfit.moms.Common.ImageLoader;
+import com.sodabodyfit.moms.EditMyWorkoutActivity;
 import com.sodabodyfit.moms.Models.Exercise;
 import com.sodabodyfit.moms.Models.Workout;
 import com.sodabodyfit.moms.Provider.DBEngine;
@@ -76,6 +78,7 @@ public class EditMyWorkoutAdapter extends CdsRecyclerViewAdapter<Exercise, EditM
                         deleteExcise(exercise_id);
                     }
                 }).build();
+        dialog.show();
     }
 
     private void deleteExcise(int exercise_id) {
@@ -87,11 +90,15 @@ public class EditMyWorkoutAdapter extends CdsRecyclerViewAdapter<Exercise, EditM
         for(int i = 0; i < exerciseIds.length; i++){
             if(Integer.parseInt(exerciseIds[i]) == exercise_id) continue;
 
-            if(newImages == "") newImages = exerciseIds[i];
+            if(newImages.isEmpty()) newImages = exerciseIds[i];
             else newImages += "," + exerciseIds[i];
         }
 
         dbEngine.updateWorkouts(workoutId, "", newImages);
+
+        Toast.makeText(context, "The selected exercise deleted!", Toast.LENGTH_SHORT).show();
+
+        this.notifyDataSetChanged();
     }
 
     @Override

@@ -175,4 +175,8 @@ public class MyPagerAdapter extends PagerAdapter {
     private boolean isCollapsed(int position) {
         return expandIndex != position;
     }
+
+    public void setData(ArrayList<CardInfo> list) {
+        this.listItems = list;
+    }
 }

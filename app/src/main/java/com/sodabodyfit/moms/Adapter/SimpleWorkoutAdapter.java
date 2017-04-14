@@ -48,8 +48,8 @@ public class SimpleWorkoutAdapter extends RecyclerView.Adapter<SimpleWorkoutAdap
             @Override
             public void onClick(View v) {//
                 Intent intent = new Intent(context, ExerciseListActivity.class);
-                intent.putExtra("workout_title", item.title);
                 intent.putExtra("workout_id", item.workout_id);
+                intent.putExtra("workout_title", item.title);
                 context.startActivity(intent);
             }
         });

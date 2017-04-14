@@ -63,7 +63,7 @@ public class PlusActivity extends AppCompatActivity {
         recycler.setLayoutManager(layoutManager);
         recycler.addItemDecoration(new DividerItemDecoration(this));
 
-        MyWorkoutAdapter adapter = new MyWorkoutAdapter(PlusActivity.this, lstWorkout);
+        MyWorkoutAdapter adapter = new MyWorkoutAdapter(PlusActivity.this, lstWorkout, exercise.exercise_id);
         recycler.setAdapter(adapter);
     }
 

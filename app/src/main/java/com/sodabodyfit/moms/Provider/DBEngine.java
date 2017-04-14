@@ -41,7 +41,8 @@ public class DBEngine {
                         Workout.KEY_info + "," +
                         Workout.KEY_infoDisplayed + "," +
                         Workout.KEY_image + "," +
-                        Workout.KEY_exercises +
+                        Workout.KEY_exercises + "," +
+                        Workout.KEY_creationDate +
                         " FROM " + Workout.TABLE +
                         " WHERE " + Workout.KEY_category + "=?";
 
@@ -61,6 +62,7 @@ public class DBEngine {
                         String temp = cursor.getString(cursor.getColumnIndex(Workout.KEY_exercises));
                         if (temp == null) workout.exercises = "";
                         else workout.exercises = temp;
+                        workout.creationDate = cursor.getString(cursor.getColumnIndex(Workout.KEY_creationDate));
                         workoutNameList.add(workout);
                     } while (cursor.moveToNext());
                 }
@@ -73,7 +75,8 @@ public class DBEngine {
                         Workout.KEY_info_dut + "," +
                         Workout.KEY_infoDisplayed + "," +
                         Workout.KEY_image + "," +
-                        Workout.KEY_exercises +
+                        Workout.KEY_exercises + "," +
+                        Workout.KEY_creationDate +
                         " FROM " + Workout.TABLE +
                         " WHERE " + Workout.KEY_category + "=?";
 
@@ -93,6 +96,7 @@ public class DBEngine {
                         String temp = cursor.getString(cursor.getColumnIndex(Workout.KEY_exercises));
                         if (temp == null) workout.exercises = "";
                         else workout.exercises = temp;
+                        workout.creationDate = cursor.getString(cursor.getColumnIndex(Workout.KEY_creationDate));
                         workoutNameList.add(workout);
                     } while (cursor.moveToNext());
                 }
@@ -122,7 +126,8 @@ public class DBEngine {
                         Workout.KEY_info + "," +
                         Workout.KEY_infoDisplayed + "," +
                         Workout.KEY_image + "," +
-                        Workout.KEY_exercises +
+                        Workout.KEY_exercises + "," +
+                        Workout.KEY_creationDate +
                         " FROM " + Workout.TABLE +
                         " WHERE " + Workout.KEY_ID + "=?";
 
@@ -139,6 +144,7 @@ public class DBEngine {
                         workout.infoDisplayed = false;
                     workout.image = cursor.getString(cursor.getColumnIndex(Workout.KEY_image));
                     workout.exercises = cursor.getString(cursor.getColumnIndex(Workout.KEY_exercises));
+                    workout.creationDate = cursor.getString(cursor.getColumnIndex(Workout.KEY_creationDate));
                 }
                 cursor.close();
             } else {
@@ -147,7 +153,8 @@ public class DBEngine {
                         Workout.KEY_info_dut + "," +
                         Workout.KEY_infoDisplayed + "," +
                         Workout.KEY_image + "," +
-                        Workout.KEY_exercises +
+                        Workout.KEY_exercises + "," +
+                        Workout.KEY_creationDate +
                         " FROM " + Workout.TABLE +
                         " WHERE " + Workout.KEY_ID + "=?";
 
@@ -164,6 +171,7 @@ public class DBEngine {
                         workout.infoDisplayed = false;
                     workout.image = cursor.getString(cursor.getColumnIndex(Workout.KEY_image));
                     workout.exercises = cursor.getString(cursor.getColumnIndex(Workout.KEY_exercises));
+                    workout.creationDate = cursor.getString(cursor.getColumnIndex(Workout.KEY_creationDate));
                 }
                 cursor.close();
             }
@@ -230,6 +238,7 @@ public class DBEngine {
             values.put(Workout.KEY_infoDisplayed, workout.infoDisplayed);
             values.put(Workout.KEY_image, workout.image);
             values.put(Workout.KEY_exercises, workout.exercises);
+            values.put(Workout.KEY_creationDate, workout.creationDate);
             db.insert(Workout.TABLE, null, values);
 
             bResult = true;
@@ -246,11 +255,13 @@ public class DBEngine {
 
     public boolean updateWorkouts(int workoutId, String title, String exercises)
     {
+        if(title.isEmpty() && exercises.isEmpty()) return false;
+
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
-            if(title != "") values.put(Workout.KEY_title, title);
-            values.put(Workout.KEY_exercises, exercises);
+            if(!title.isEmpty()) values.put(Workout.KEY_title, title);
+            if(!exercises.isEmpty()) values.put(Workout.KEY_exercises, exercises);
             db.update(Workout.TABLE, values, "id=?", new String[]{String.valueOf(workoutId)});
         }
         catch (Exception e){
@@ -260,7 +271,7 @@ public class DBEngine {
             db.close();
         }
 
-        return  true;
+        return true;
     }
 
     // Exercise
