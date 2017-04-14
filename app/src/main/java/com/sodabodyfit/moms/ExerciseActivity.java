@@ -46,19 +46,20 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
     private Handler m_ExerciseHandler = null;
     private Runnable m_ExerciseRunnable = null;
-    public static final int EXERCISE_DELAY = 1000;//1Sec
+    public static final int EXERCISE_DELAY = 500;//1Sec
     private int m_ExerciseTime = 15;//in sec
     private int m_CurExerciseTime = 15;
 
     private Handler m_RestHandler = null;
     private Runnable m_RestRunnable = null;
-    public static final int REST_DELAY = 1000;//1Sec
+    public static final int REST_DELAY = 500;//1Sec
     private int m_RestTime = 10;//in sec
     private int m_CurRestTime = 10;
 
     private int m_CurrentPageNum = 0;
     private boolean m_isPlay = false;
     private boolean m_isAlarm = false;
+    private boolean m_isRest = false;
     private boolean m_isFavourite = false;
 
     @Override
@@ -213,9 +214,13 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
     private void startRest()
     {
+        m_isRest = true;
         m_CurRestTime = m_RestTime;
+
         updatePanel.setTimeCount(m_CurRestTime, "REST");
         m_RestHandler.postDelayed(m_RestRunnable, REST_DELAY);
+
+        stopPlay();
     }
 
     private void countDownRest()
@@ -223,7 +228,10 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         m_CurRestTime--;
         updatePanel.setYPos(m_CurRestTime);
     }
+
     private void stopRest() {
+        m_isRest = false;
+
         m_ExerciseHandler.removeCallbacks(m_ExerciseRunnable);
         m_RestHandler.removeCallbacks(m_RestRunnable);
 
@@ -239,12 +247,15 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
             startExercise();
         }
     }
+
     private void startExercise()
     {
         m_CurExerciseTime = m_ExerciseTime;
         updatePanel.setTimeCount(m_CurExerciseTime, "EXERCISE");
         updatePanel.reset();
         m_ExerciseHandler.postDelayed(m_ExerciseRunnable, EXERCISE_DELAY);
+
+        startPlay();
     }
 
     private void countDownExercise()
@@ -340,6 +351,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     private void onClickAlarm() {
         if(m_isAlarm)
         {
+            // play
             m_isAlarm = false;
             ivExercise.setImageResource(R.drawable.ic_stop_exercise);
             updatePanel.setVisibility(View.GONE);
@@ -347,11 +359,16 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         }
         else
         {
+            // stop
             m_isAlarm = true;
             ivExercise.setImageResource(R.drawable.ic_start_exercise);
             updatePanel.setVisibility(View.VISIBLE);
+
             m_CurSet = m_Set;
-            updatePanel.init(15);
+            m_CurExerciseTime = m_ExerciseTime;
+            m_CurRestTime = m_RestTime;
+
+            updatePanel.init(m_ExerciseTime);
             updatePanel.reset();
             stopPlay();
         }
@@ -367,29 +384,33 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private  void startPlay(){
+        m_isPlay = true;
+        m_PlayHandler.postDelayed(m_PlayRunnable, PLAY_DELAY);
+        ivPlay.setImageResource(R.drawable.pause_icon);
+    }
     private void stopPlay() {
-        if(m_isPlay)
-        {
-            m_isPlay = false;
-            m_PlayHandler.removeCallbacks(m_PlayRunnable);
-            ivPlay.setImageResource(R.drawable.play_icon);
-        }
+        m_isPlay = false;
+        m_PlayHandler.removeCallbacks(m_PlayRunnable);
+        ivPlay.setImageResource(R.drawable.play_icon);
     }
 
     private void onClickPlay() {
         if(m_isPlay)
         {
-            m_isPlay = false;
-            m_PlayHandler.removeCallbacks(m_PlayRunnable);
-            ivPlay.setImageResource(R.drawable.play_icon);
+            if(m_isAlarm)
+                return;
+            else
+                stopPlay();
         }
         else
         {
-            m_isPlay = true;
-            m_PlayHandler.postDelayed(m_PlayRunnable, PLAY_DELAY);
-            ivPlay.setImageResource(R.drawable.pause_icon);
+            if(m_isRest) return;;
+
             if(m_isAlarm)
                 startExercise();
+            else
+                startPlay();
         }
     }
 

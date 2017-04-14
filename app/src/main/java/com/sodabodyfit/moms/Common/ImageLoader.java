@@ -87,6 +87,10 @@ public class ImageLoader {
         catch (Exception e){
             Log.d("LoadImage", e.toString());
         }
+        finally {
+            DBEngine dbEngine = new DBEngine(context);
+            dbEngine.updateImagePath(imageId, false);
+        }
     }
 
     private static boolean DownloadImage(ResponseBody body, Context context, ImageView imageView, String fileName) {
