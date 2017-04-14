@@ -21,4 +21,5 @@
     <color name="dialog_background">#4b7181</color>
     <color name="colorText">#8D98AD</color>
     <color name="colorSepLine">#CCCCCC</color>
+    <color name="disableText">#C0C0C0</color>
 </resources>
