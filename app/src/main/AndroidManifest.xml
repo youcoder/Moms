@@ -63,14 +63,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoTitle" />
         <activity
-            android:name=".DiscalmierActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoTitle" />
-        <activity
             android:name=".AddWorkoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoTitle" />
-        <activity android:name=".EditMyWorkoutActivity"
+        <activity
+            android:name=".EditMyWorkoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoTitle" />
     </application>

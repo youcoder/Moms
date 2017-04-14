@@ -3,6 +3,7 @@ package com.sodabodyfit.moms;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -12,10 +13,14 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.sodabodyfit.moms.Adapter.MyPagerAdapter;
 import com.sodabodyfit.moms.Common.CardInfo;
 import com.sodabodyfit.moms.Common.CarouselEffectTransformer;
@@ -39,11 +44,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         _instance = this;
-
-        initData();
-    }
-
-    private void initData() {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ArrayList<Workout> workouts = dbEngine.getWorkoutList(i);
             cardInfos.add(new CardInfo(cardPhotoId[i], detailPhotoId[i], workouts));
         }
+
         MyPagerAdapter adapter = new MyPagerAdapter(this, cardInfos);
         viewpager.setAdapter(adapter);
 
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.ll_disclaimer:
                 dlDrawer.closeDrawers();
-                disclamer();
+                acceptDialog();
                 break;
             case R.id.ll_change_password:
                 dlDrawer.closeDrawers();
@@ -153,14 +154,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void disclamer()
-    {
-        Intent intent = new Intent(this, DiscalmierActivity.class);
-        startActivity(intent);
+    private void acceptDialog() {
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .customView(R.layout.dialog_disclaimer, true)
+                .cancelable(false)
+                .build();
+
+        Button btContinue = (Button)dialog.getCustomView().findViewById(R.id.btn_continue);
+        btContinue.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.buttonEnable));
+        btContinue.setEnabled(true);
+        btContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        CheckBox cbAccept = (CheckBox)dialog.getCustomView().findViewById(R.id.chk_accept);
+        cbAccept.setChecked(true);
+        cbAccept.setEnabled(false);
+        dialog.show();
     }
 
-    private void logout()
-    {
+    private void logout() {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();

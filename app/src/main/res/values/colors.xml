@@ -22,4 +22,7 @@
     <color name="colorText">#8D98AD</color>
     <color name="colorSepLine">#CCCCCC</color>
     <color name="disableText">#C0C0C0</color>
+
+    <color name="buttonDisable">#FFD2C9</color>
+    <color name="buttonEnable">#FF603F</color>
 </resources>
