@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity{
 
         Login service = retrofit.create(Login.class);
 
-        Call<UserInfo> call = service.sendLoginRequest("marsxcv3@outlook.com", "mars12345");
+        Call<UserInfo> call = service.sendLoginRequest(email, password);
         call.enqueue(new Callback<UserInfo>() {
 
             @Override

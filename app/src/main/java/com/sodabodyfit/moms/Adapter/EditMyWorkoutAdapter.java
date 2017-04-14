@@ -82,23 +82,16 @@ public class EditMyWorkoutAdapter extends CdsRecyclerViewAdapter<Exercise, EditM
     }
 
     private void deleteExcise(int exercise_id) {
-        DBEngine dbEngine = new DBEngine(context);
-        Workout myWorkout = dbEngine.getWorkoutInfo(workoutId);
-        String[] exerciseIds = myWorkout.exercises.split(",");
 
-        String newImages = "";
-        for(int i = 0; i < exerciseIds.length; i++){
-            if(Integer.parseInt(exerciseIds[i]) == exercise_id) continue;
-
-            if(newImages.isEmpty()) newImages = exerciseIds[i];
-            else newImages += "," + exerciseIds[i];
+        for (int i = 0; i < lstExercise.size(); i++) {
+            if(lstExercise.get(i).exercise_id == exercise_id) {
+                lstExercise.remove(i);
+            }
         }
 
-        dbEngine.updateWorkouts(workoutId, "", newImages);
+        this.notifyDataSetChanged();
 
         Toast.makeText(context, "The selected exercise deleted!", Toast.LENGTH_SHORT).show();
-
-        this.notifyDataSetChanged();
     }
 
     @Override

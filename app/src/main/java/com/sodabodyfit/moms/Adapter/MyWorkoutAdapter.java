@@ -65,18 +65,18 @@ public class MyWorkoutAdapter extends RecyclerView.Adapter<MyWorkoutAdapter.View
     private Boolean AddExerciseToWorkout(int workout_id){
         DBEngine dbEngine = new DBEngine(context);
         Workout myWorkout = dbEngine.getWorkoutInfo(workout_id);
-        String newImages = myWorkout.exercises;
+        String newExercises = myWorkout.exercises;
 
-        if(newImages.contains(String.valueOf(exercise_id))) {
+        if(newExercises.contains(String.valueOf(exercise_id))) {
             Toast.makeText(context, "The selected workout already contains the exercise", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if(newImages.isEmpty()) newImages = String.valueOf(exercise_id);
-        else newImages += "," + String.valueOf(exercise_id);
+        if(newExercises.isEmpty()) newExercises = String.valueOf(exercise_id);
+        else newExercises += "," + String.valueOf(exercise_id);
 
 
-        boolean bResult = dbEngine.updateWorkouts(myWorkout.workout_id, "", newImages);
+        boolean bResult = dbEngine.updateWorkoutExerciseList(myWorkout.workout_id, newExercises);
 
         if(bResult) Toast.makeText(context, "The exercise has added to the selected workout", Toast.LENGTH_SHORT).show();
 

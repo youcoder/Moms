@@ -86,6 +86,14 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
         mItemDragCompleteListener = new CdsItemTouchCallback.ItemDragCompleteListener() {
             @Override
             public void onItemDragComplete(int fromPosition, int toPosition) {
+
+                Exercise tempData = lstExercise.get(fromPosition);
+                lstExercise.remove(fromPosition);
+                if(fromPosition < toPosition)
+                    lstExercise.add(toPosition - 1, tempData);
+                else
+                    lstExercise.add(toPosition, tempData);
+
                 Toast.makeText(EditMyWorkoutActivity.this, "Item dragged from " + fromPosition +
                         " to " + toPosition, Toast.LENGTH_SHORT).show();
             }
@@ -93,12 +101,11 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
     }
 
     private void deleteAllExercise() {
-        DBEngine dbEngine = new DBEngine(this);
-        dbEngine.updateWorkouts(workoutId, "", "");
+
+        lstExercise.clear();
+        adapter.notifyDataSetChanged();
 
         Toast.makeText(EditMyWorkoutActivity.this, "All exercise deleted!", Toast.LENGTH_SHORT).show();
-
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -130,11 +137,21 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
         EditText edtWorkoutTitle = (EditText)findViewById(R.id.edt_workout_title);
         String title = edtWorkoutTitle.getText().toString();
 
+        DBEngine dbEngine = new DBEngine(this);
+
         if(!title.isEmpty()) {
-            DBEngine dbEngine = new DBEngine(this);
-            dbEngine.updateWorkouts(workoutId, title, "");
+            dbEngine.updateWorkoutName(workoutId, title);
         } else {
             Toast.makeText(EditMyWorkoutActivity.this, "The title is empty.", Toast.LENGTH_SHORT).show();
         }
+
+        String newExercises = "";
+        for (int i = 0; i < lstExercise.size(); i++)
+            if(i == 0) newExercises = String.valueOf(lstExercise.get(0).exercise_id);
+            else newExercises += "," + String.valueOf(lstExercise.get(i).exercise_id);
+
+        dbEngine.updateWorkoutExerciseList(workoutId, newExercises);
+
+        EditMyWorkoutActivity.this.finish();
     }
 }

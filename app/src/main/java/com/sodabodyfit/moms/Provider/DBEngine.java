@@ -253,15 +253,32 @@ public class DBEngine {
         return bResult;
     }
 
-    public boolean updateWorkouts(int workoutId, String title, String exercises)
+    public boolean updateWorkoutName(int workoutId, String title)
     {
-        if(title.isEmpty() && exercises.isEmpty()) return false;
+        if(title.isEmpty()) return false;
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
-            if(!title.isEmpty()) values.put(Workout.KEY_title, title);
-            if(!exercises.isEmpty()) values.put(Workout.KEY_exercises, exercises);
+            values.put(Workout.KEY_title, title);
+            db.update(Workout.TABLE, values, "id=?", new String[]{String.valueOf(workoutId)});
+        }
+        catch (Exception e){
+            Log.d("DBEngine", e.toString());
+        }
+        finally {
+            db.close();
+        }
+
+        return true;
+    }
+
+    public boolean updateWorkoutExerciseList(int workoutId, String exercises)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(Workout.KEY_exercises, exercises);
             db.update(Workout.TABLE, values, "id=?", new String[]{String.valueOf(workoutId)});
         }
         catch (Exception e){
