@@ -202,9 +202,9 @@ public class SignupActivity extends AppCompatActivity implements ViewPager.OnPag
                         } else {
                             experience = "Beginner";
                         }
-//                        if (validate()) {
+                        if (validate()) {
                             acceptDialog();
-//                        }
+                        }
 
                     }
                 });
@@ -356,7 +356,7 @@ public class SignupActivity extends AppCompatActivity implements ViewPager.OnPag
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-//                signUp();
+                signUp();
             }
         });
         CheckBox cbAccept = (CheckBox)dialog.getCustomView().findViewById(R.id.chk_accept);
