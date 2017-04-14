@@ -14,7 +14,11 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.gaurav.cdsrecyclerview.CdsRecyclerViewAdapter;
+import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.Models.Exercise;
+import com.sodabodyfit.moms.Models.Workout;
+import com.sodabodyfit.moms.Provider.DBEngine;
 import com.sodabodyfit.moms.R;
 
 import java.util.ArrayList;
@@ -23,13 +27,17 @@ import java.util.ArrayList;
  * Created by owner on 3/7/2017.
  */
 
-public class EditMyWorkoutAdapter extends RecyclerView.Adapter<EditMyWorkoutAdapter.ViewHolder> {
+public class EditMyWorkoutAdapter extends CdsRecyclerViewAdapter<Exercise, EditMyWorkoutAdapter.ViewHolder> {
 
     Context context;
+    int workoutId;
     ArrayList<Exercise> lstExercise = new ArrayList<Exercise>();
 
-    public EditMyWorkoutAdapter(Context context, ArrayList<Exercise> listContent) {
+    public EditMyWorkoutAdapter(Context context, int workoutId, ArrayList<Exercise> listContent) {
+        super(context, listContent);
+
         this.context = context;
+        this.workoutId = workoutId;
         this.lstExercise = listContent;
     }
 
@@ -40,21 +48,22 @@ public class EditMyWorkoutAdapter extends RecyclerView.Adapter<EditMyWorkoutAdap
         return new ViewHolder(v);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final Exercise item = lstExercise.get(position);
-        Glide.with(context).load(item.images).placeholder(R.drawable.loading).into(holder.ivExercise);
-        holder.tvSubject.setText(item.title);
-        holder.ivDelete.setOnClickListener(new View.OnClickListener() {
+        String[] imageIds = item.images.split(",");
+        if(imageIds.length > 0) ImageLoader.LoadImage(context, ((ViewHolder) holder).ivExercise, imageIds[0]);
+        ((ViewHolder) holder).tvSubject.setText(item.title);
+        ((ViewHolder) holder).ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                confirmDialog();
+                confirmDialog(item.exercise_id);
             }
         });
     }
 
-    private void confirmDialog() {
+    private void confirmDialog(final int exercise_id) {
         MaterialDialog dialog = new MaterialDialog.Builder(context)
                 .title("confirm")
                 .content("Are you sure you want to delete it?")
@@ -64,13 +73,25 @@ public class EditMyWorkoutAdapter extends RecyclerView.Adapter<EditMyWorkoutAdap
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        deleteExcise();
+                        deleteExcise(exercise_id);
                     }
                 }).build();
     }
 
-    private void deleteExcise() {
+    private void deleteExcise(int exercise_id) {
+        DBEngine dbEngine = new DBEngine(context);
+        Workout myWorkout = dbEngine.getWorkoutInfo(workoutId);
+        String[] exerciseIds = myWorkout.exercises.split(",");
 
+        String newImages = "";
+        for(int i = 0; i < exerciseIds.length; i++){
+            if(Integer.parseInt(exerciseIds[i]) == exercise_id) continue;
+
+            if(newImages == "") newImages = exerciseIds[i];
+            else newImages += "," + exerciseIds[i];
+        }
+
+        dbEngine.updateWorkouts(workoutId, "", newImages);
     }
 
     @Override

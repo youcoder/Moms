@@ -18,6 +18,8 @@ import com.gaurav.cdsrecyclerview.CdsRecyclerView;
 import com.sodabodyfit.moms.Adapter.EditMyWorkoutAdapter;
 import com.sodabodyfit.moms.Common.DividerItemDecoration;
 import com.sodabodyfit.moms.Models.Exercise;
+import com.sodabodyfit.moms.Models.Workout;
+import com.sodabodyfit.moms.Provider.DBEngine;
 
 import java.util.ArrayList;
 
@@ -55,9 +57,16 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
         CdsRecyclerView recycler = (CdsRecyclerView) findViewById(R.id.recycler);
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(layoutManager);
-        recycler.addItemDecoration(new DividerItemDecoration(this));
 
-        EditMyWorkoutAdapter adapter = new EditMyWorkoutAdapter(EditMyWorkoutActivity.this, lstExercise);
+        DBEngine dbEngine = new DBEngine(this);
+        Workout myWorkout = dbEngine.getWorkoutInfo(workoutId);
+        String[] exerciseIds = myWorkout.exercises.split(",");
+
+        for(int i = 0; i < exerciseIds.length; i++){
+            lstExercise.add(dbEngine.getExerciseInfo(Integer.parseInt(exerciseIds[i])));
+        }
+
+        EditMyWorkoutAdapter adapter = new EditMyWorkoutAdapter(EditMyWorkoutActivity.this, workoutId, lstExercise);
         recycler.setAdapter(adapter);
 
         recycler.enableItemDrag();
@@ -65,13 +74,6 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
     }
 
     private void initListeners() {
-//        mItemClickListener = new CdsRecyclerView.ItemClickListener() {
-//            @Override
-//            public void onItemClick(int position) {
-//                Toast.makeText(MainActivity.this, "Item Clicked:" +
-//                        mRecyclerViewAdapter.getItem(position), Toast.LENGTH_SHORT).show();
-//            }
-//        };
 
         mItemDragCompleteListener = new CdsItemTouchCallback.ItemDragCompleteListener() {
             @Override
@@ -83,7 +85,8 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
     }
 
     private void deleteAllExercise() {
-
+        DBEngine dbEngine = new DBEngine(this);
+        dbEngine.updateWorkouts(workoutId, "", "");
     }
 
     @Override

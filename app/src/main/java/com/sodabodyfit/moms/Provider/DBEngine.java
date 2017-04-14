@@ -249,7 +249,7 @@ public class DBEngine {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
-            values.put(Workout.KEY_title, title);
+            if(title != "") values.put(Workout.KEY_title, title);
             values.put(Workout.KEY_exercises, exercises);
             db.update(Workout.TABLE, values, "id=?", new String[]{String.valueOf(workoutId)});
         }

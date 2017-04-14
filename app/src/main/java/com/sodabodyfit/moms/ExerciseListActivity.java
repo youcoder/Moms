@@ -84,7 +84,7 @@ public class ExerciseListActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         getMenuInflater().inflate(R.menu.menu_exercise_list, menu);
 
-        if (workoutId == 23) {
+        if (workoutId < 23) {
             MenuItem item = menu.findItem(R.id.action_edit);
             item.setVisible(false);
         }

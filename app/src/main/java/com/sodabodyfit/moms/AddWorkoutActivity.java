@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.Models.Exercise;
@@ -26,6 +28,9 @@ public class AddWorkoutActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_workout);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
         exercise = intent.getParcelableExtra("exercise");
@@ -73,21 +78,22 @@ public class AddWorkoutActivity extends AppCompatActivity {
             String newWorkoutName = etWorkoutSubject.getText().toString();
 
             DBEngine dbEngine = new DBEngine(this);
-            //boolean bExist = dbEngine.IsExistWorkoutName(newWorkoutName);
+            boolean bExist = dbEngine.CheckWorkoutName(newWorkoutName);
 
-            //if (bExist) {
+            if (!bExist) {
+                Workout newMyWorkout = new Workout();
+                newMyWorkout.category_id = 1;
+                newMyWorkout.title = newWorkoutName;
+                newMyWorkout.info = "";
+                newMyWorkout.infoDisplayed = false;
+                newMyWorkout.exercises = String.valueOf(exercise.exercise_id);
+                String[] imageIds = exercise.images.split(",");
+                if (imageIds.length > 0) newMyWorkout.image = imageIds[0];
 
-            Workout newMyWorkout = new Workout();
-            newMyWorkout.category_id = 1;
-            newMyWorkout.title = newWorkoutName;
-            newMyWorkout.info = "";
-            newMyWorkout.infoDisplayed = false;
-            newMyWorkout.exercises = String.valueOf(exercise.exercise_id);
-            String[] imageIds = exercise.images.split(",");
-            if (imageIds.length > 0) newMyWorkout.image = imageIds[0];
+                dbEngine.addWorkouts(newMyWorkout);
 
-            dbEngine.addWorkouts(newMyWorkout);
-            //}
+                Toast.makeText(AddWorkoutActivity.this, "created successfully!", Toast.LENGTH_SHORT).show();
+            }
         }
         catch (Exception e){
             Log.d("AddWorkout", e.toString());

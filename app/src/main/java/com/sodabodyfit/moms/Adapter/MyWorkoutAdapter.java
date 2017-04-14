@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.Models.Workout;
 import com.sodabodyfit.moms.Provider.DBEngine;
 import com.sodabodyfit.moms.R;
@@ -46,7 +47,24 @@ public class MyWorkoutAdapter extends RecyclerView.Adapter<MyWorkoutAdapter.View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Workout item = listContent.get(position);
         holder.tvSubject.setText(item.title);
-        Glide.with(context).load(item.image).placeholder(R.drawable.loading).into(holder.ivExercise);
+        ImageLoader.LoadImage(context, holder.ivExercise, item.image);
+
+        holder.ivExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //showExercise(item);
+            }
+        });
+    }
+
+    private void AddExerciseToWorkout(Workout myWorkout, int exercise_id){
+        String newImages = myWorkout.exercises;
+
+        if(newImages == "") newImages = String.valueOf(exercise_id);
+        else newImages += "," + String.valueOf(exercise_id);
+
+        DBEngine dbEngine = new DBEngine(context);
+        dbEngine.updateWorkouts(myWorkout.workout_id, "", newImages);
     }
 
     @Override
