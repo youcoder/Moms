@@ -19,6 +19,7 @@ android {
     }
 }
 
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -34,4 +35,5 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.GauravChaddha1996:CDSRecyclerView:1.0'
 }
