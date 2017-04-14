@@ -90,7 +90,6 @@ public class ImageLoader {
         }
     }
 
-    // added newly
     private static void ChangeImageStatus(Context context, String imageId, Boolean bDownloading){
         DBEngine dbEngine = new DBEngine(context);
         dbEngine.updateImagePath(imageId, bDownloading);
