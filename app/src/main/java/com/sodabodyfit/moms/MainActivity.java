@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayList<Workout> workouts = dbEngine.getWorkoutList(1);
         cardInfos.set(1, new CardInfo(cardPhotoId[1], detailPhotoId[1], workouts));
 
-        adapter.setData(cardInfos);
+//        adapter.setData(cardInfos);
         adapter.notifyDataSetChanged();
     }
 
