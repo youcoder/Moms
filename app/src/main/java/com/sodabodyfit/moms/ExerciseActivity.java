@@ -113,8 +113,9 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         m_ExerciseTime = 15;
         updatePanel = (DrawView)findViewById(R.id.update_panel);
         updatePanel.init(m_ExerciseTime);
-
-        m_RestTime = Integer.parseInt(exercise.rest);
+        
+        String[] restTimes = exercise.rest.split("/");
+        if(restTimes.length > 0) m_RestTime = Integer.parseInt(restTimes[0]);
 
         ivPlay = (ImageView)findViewById(R.id.img_play);
         ivPlay.setOnClickListener(this);

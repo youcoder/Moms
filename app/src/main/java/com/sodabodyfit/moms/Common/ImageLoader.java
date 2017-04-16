@@ -17,7 +17,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,8 +46,14 @@ public class ImageLoader {
 
                 dbEngine.updateImagePath(imageId, true);    // state = downloading...
 
+                OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                        .connectTimeout(60, TimeUnit.SECONDS)
+                        .readTimeout(60, TimeUnit.SECONDS)
+                        .writeTimeout(60, TimeUnit.SECONDS)
+                        .build();
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(Constants.BASE_URL)
+                        .client(okHttpClient)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
