@@ -23,11 +23,13 @@ import com.sodabodyfit.moms.Provider.DBEngine;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class EditMyWorkoutActivity extends AppCompatActivity {
 
     private ArrayList<Exercise> lstExercise = new ArrayList<Exercise>();
+    private ArrayList<Exercise> lstTemp = new ArrayList<Exercise>();
     private CdsItemTouchCallback.ItemDragCompleteListener mItemDragCompleteListener;
     private int workoutId;
     private EditMyWorkoutAdapter adapter;
@@ -70,7 +72,9 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
             String[] exerciseIds = myWorkout.exercises.split(",");
 
             for (int i = 0; i < exerciseIds.length; i++) {
-                lstExercise.add(dbEngine.getExerciseInfo(Integer.parseInt(exerciseIds[i])));
+                Exercise exercise = dbEngine.getExerciseInfo(Integer.parseInt(exerciseIds[i]));
+                lstExercise.add(exercise);
+                lstTemp.add(exercise);
             }
         }
 
@@ -87,12 +91,7 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
             @Override
             public void onItemDragComplete(int fromPosition, int toPosition) {
 
-                Exercise tempData = lstExercise.get(fromPosition);
-                lstExercise.remove(fromPosition);
-                if(fromPosition < toPosition)
-                    lstExercise.add(toPosition - 1, tempData);
-                else
-                    lstExercise.add(toPosition, tempData);
+                Collections.swap(lstTemp, fromPosition, toPosition);
 
                 Toast.makeText(EditMyWorkoutActivity.this, "Item dragged from " + fromPosition +
                         " to " + toPosition, Toast.LENGTH_SHORT).show();
@@ -103,6 +102,7 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
     private void deleteAllExercise() {
 
         lstExercise.clear();
+        lstTemp.clear();
         adapter.notifyDataSetChanged();
 
         Toast.makeText(EditMyWorkoutActivity.this, "All exercise deleted!", Toast.LENGTH_SHORT).show();
@@ -134,24 +134,23 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
     }
 
     private void SaveMyworkout() {
+
         EditText edtWorkoutTitle = (EditText)findViewById(R.id.edt_workout_title);
         String title = edtWorkoutTitle.getText().toString();
 
         DBEngine dbEngine = new DBEngine(this);
-
         if(!title.isEmpty()) {
+            String newExercises = "";
+            for (int i = 0; i < lstTemp.size(); i++)
+                if(i == 0) newExercises = String.valueOf(lstTemp.get(0).exercise_id);
+                else newExercises += "," + String.valueOf(lstTemp.get(i).exercise_id);
+
             dbEngine.updateWorkoutName(workoutId, title);
+            dbEngine.updateWorkoutExerciseList(workoutId, newExercises);
+
+            EditMyWorkoutActivity.this.finish();
         } else {
             Toast.makeText(EditMyWorkoutActivity.this, "The title is empty.", Toast.LENGTH_SHORT).show();
         }
-
-        String newExercises = "";
-        for (int i = 0; i < lstExercise.size(); i++)
-            if(i == 0) newExercises = String.valueOf(lstExercise.get(0).exercise_id);
-            else newExercises += "," + String.valueOf(lstExercise.get(i).exercise_id);
-
-        dbEngine.updateWorkoutExerciseList(workoutId, newExercises);
-
-        EditMyWorkoutActivity.this.finish();
     }
 }
