@@ -61,7 +61,7 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
         tvDeleteAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteAllExercise();
+                confirmDeleteAll();
             }
         });
         EditText edtWorkoutTitle = (EditText)findViewById(R.id.edt_workout_title);
@@ -139,6 +139,22 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
             EditMyWorkoutActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmDeleteAll() {
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title("confirm")
+                .content("Are you sure you want to delete all exercises?")
+                .positiveText("OK")
+                .negativeText("CANCEL")
+                .cancelable(false)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        deleteAllExercise();
+                    }
+                }).build();
+        dialog.show();
     }
 
     private void SaveMyworkout() {

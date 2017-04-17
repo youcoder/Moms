@@ -35,6 +35,7 @@ public class ExerciseListActivity extends AppCompatActivity {
     private DBEngine dbEngine;
     private ExerciseListAdapter adapter;
     private TextView tvTitle;
+    private Menu menuOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,8 @@ public class ExerciseListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        menuOption = menu;
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setHomeButtonEnabled(true);
@@ -200,6 +202,11 @@ public class ExerciseListActivity extends AppCompatActivity {
                 dbEngine = new DBEngine(this);
                 Workout workout = dbEngine.getWorkoutInfo(workoutId);
                 tvTitle.setText(workout.title.toUpperCase());
+
+                if (workoutId < 23 || (workout.exercises != null && workout.exercises.isEmpty())) {
+                    MenuItem item = menuOption.findItem(R.id.action_edit);
+                    item.setVisible(false);
+                }
 
                 adapter.notifyDataSetChanged();
             //}

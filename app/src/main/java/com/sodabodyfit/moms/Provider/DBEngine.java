@@ -578,8 +578,11 @@ public class DBEngine {
                     nExCount = cursor.getInt(cursor.getColumnIndex("ExCount"));
                 } else {
                     String exercises = cursor.getString(cursor.getColumnIndex(Workout.KEY_exercises));
-                    String[] exerciseArray = exercises.split(",");
-                    nExCount = exerciseArray.length;
+
+                    if(exercises != null && !exercises.isEmpty()) {
+                        String[] exerciseArray = exercises.split(",");
+                        nExCount = exerciseArray.length;
+                    }
                 }
             }
 
