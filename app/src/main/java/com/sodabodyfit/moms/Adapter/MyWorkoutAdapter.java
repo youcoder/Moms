@@ -68,7 +68,7 @@ public class MyWorkoutAdapter extends RecyclerView.Adapter<MyWorkoutAdapter.View
         String newExercises = myWorkout.exercises;
 
         if(newExercises.contains(String.valueOf(exercise_id))) {
-            Toast.makeText(context, "The selected workout already contains the exercise", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, myWorkout.title.toUpperCase() + " already contains the exercise", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -78,7 +78,7 @@ public class MyWorkoutAdapter extends RecyclerView.Adapter<MyWorkoutAdapter.View
 
         boolean bResult = dbEngine.updateWorkoutExerciseList(myWorkout.workout_id, newExercises);
 
-        if(bResult) Toast.makeText(context, "The exercise has added to the selected workout", Toast.LENGTH_SHORT).show();
+        if(bResult) Toast.makeText(context, "added to " + myWorkout.title.toUpperCase(), Toast.LENGTH_SHORT).show();
 
         return bResult;
     }

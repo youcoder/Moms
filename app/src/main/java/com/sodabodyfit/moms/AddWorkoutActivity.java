@@ -84,6 +84,11 @@ public class AddWorkoutActivity extends AppCompatActivity {
         try {
             String newWorkoutName = etWorkoutSubject.getText().toString();
 
+            if(newWorkoutName.trim().isEmpty()){
+                Toast.makeText(AddWorkoutActivity.this, "Please enter the title.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             DBEngine dbEngine = new DBEngine(this);
             boolean bExist = dbEngine.CheckWorkoutName(newWorkoutName);
 
@@ -103,7 +108,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
 
                 dbEngine.addWorkouts(newMyWorkout);
 
-                Toast.makeText(AddWorkoutActivity.this, "created successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddWorkoutActivity.this, newWorkoutName + " created successfully!", Toast.LENGTH_SHORT).show();
             }
         }
         catch (Exception e){

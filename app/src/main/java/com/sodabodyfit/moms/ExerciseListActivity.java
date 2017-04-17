@@ -199,7 +199,7 @@ public class ExerciseListActivity extends AppCompatActivity {
 
                 dbEngine = new DBEngine(this);
                 Workout workout = dbEngine.getWorkoutInfo(workoutId);
-                tvTitle.setText(workout.title);
+                tvTitle.setText(workout.title.toUpperCase());
 
                 adapter.notifyDataSetChanged();
             //}

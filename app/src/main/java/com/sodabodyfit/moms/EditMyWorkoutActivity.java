@@ -197,7 +197,7 @@ public class EditMyWorkoutActivity extends AppCompatActivity {
         private void confirmDialog(final int exercise_id) {
             MaterialDialog dialog = new MaterialDialog.Builder(context)
                     .title("confirm")
-                    .content("Are you sure you want to delete it?" + String.valueOf(exercise_id))
+                    .content("Are you sure you want to delete it?")
                     .positiveText("OK")
                     .negativeText("CANCEL")
                     .cancelable(false)
