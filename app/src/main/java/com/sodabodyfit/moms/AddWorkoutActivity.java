@@ -71,22 +71,23 @@ public class AddWorkoutActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_ok) {
-            CreateMyworkout();
-            AddWorkoutActivity.this.finish();
+            if(CreateMyworkout()) {
+                AddWorkoutActivity.this.finish();
+            }
         }else if (id == android.R.id.home) {
             AddWorkoutActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void CreateMyworkout() {
+    private boolean CreateMyworkout() {
 
         try {
             String newWorkoutName = etWorkoutSubject.getText().toString();
 
             if(newWorkoutName.trim().isEmpty()){
                 Toast.makeText(AddWorkoutActivity.this, "Please enter the title.", Toast.LENGTH_SHORT).show();
-                return;
+                return false;
             }
 
             DBEngine dbEngine = new DBEngine(this);
@@ -109,10 +110,16 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 dbEngine.addWorkouts(newMyWorkout);
 
                 Toast.makeText(AddWorkoutActivity.this, newWorkoutName + " created successfully!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(AddWorkoutActivity.this, "There is already the same title", Toast.LENGTH_SHORT).show();
+                return false;
             }
         }
         catch (Exception e){
             Log.d("AddWorkout", e.toString());
+            return false;
         }
+
+        return true;
     }
 }
