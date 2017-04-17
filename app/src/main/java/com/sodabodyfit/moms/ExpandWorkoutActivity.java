@@ -14,12 +14,15 @@ import android.widget.TextView;
 import com.sodabodyfit.moms.Adapter.WorkoutAdapter;
 import com.sodabodyfit.moms.Common.DividerItemDecoration;
 import com.sodabodyfit.moms.Models.Workout;
+import com.sodabodyfit.moms.Provider.DBEngine;
 
 import java.util.ArrayList;
 
 public class ExpandWorkoutActivity extends AppCompatActivity {
 
     private ArrayList<Workout> lstWorkout = new ArrayList<Workout>();
+    private int categoryId;
+    private WorkoutAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class ExpandWorkoutActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
-        int categoryId = bundle.getInt("category_id");
+        categoryId = bundle.getInt("category_id");
         int resId = bundle.getInt("image");
         lstWorkout = bundle.getParcelableArrayList("workout");
 
@@ -47,7 +50,7 @@ public class ExpandWorkoutActivity extends AppCompatActivity {
         recycler.setLayoutManager(layoutManager);
         recycler.addItemDecoration(new DividerItemDecoration(this));
 
-        WorkoutAdapter adapter = new WorkoutAdapter(ExpandWorkoutActivity.this, lstWorkout);
+        adapter = new WorkoutAdapter(ExpandWorkoutActivity.this, lstWorkout);
         recycler.setAdapter(adapter);
     }
 
@@ -68,5 +71,14 @@ public class ExpandWorkoutActivity extends AppCompatActivity {
             ExpandWorkoutActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        DBEngine dbEngine = new DBEngine(this);
+        lstWorkout = dbEngine.getWorkoutList(categoryId);
+        adapter.notifyDataSetChanged();
     }
 }

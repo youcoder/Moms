@@ -76,7 +76,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
         TextView tvSubject = (TextView)findViewById(R.id.txt_schema_content);
         tvSubject.setTypeface(typeFace);
-        tvSubject.setText(exercise.title);
+        tvSubject.setText(exercise.title.toUpperCase());
 
         TextView tvSet = (TextView)findViewById(R.id.txt_set);
         tvSet.setText(exercise.sets);
@@ -113,7 +113,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         m_ExerciseTime = 15;
         updatePanel = (DrawView)findViewById(R.id.update_panel);
         updatePanel.init(m_ExerciseTime);
-        
+
         String[] restTimes = exercise.rest.split("/");
         if(restTimes.length > 0) m_RestTime = Integer.parseInt(restTimes[0]);
 

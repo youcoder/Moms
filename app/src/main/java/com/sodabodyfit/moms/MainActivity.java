@@ -137,15 +137,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onRestart() {
         super.onRestart();
 
-        if (curPage == 1) {
-            DBEngine dbEngine = new DBEngine(this);
-            ArrayList<Workout> workouts = dbEngine.getWorkoutList(1);
-            cardInfos.set(1, new CardInfo(cardPhotoId[1], detailPhotoId[1], workouts));
+        DBEngine dbEngine = new DBEngine(this);
+        ArrayList<Workout> workouts = dbEngine.getWorkoutList(1);
+        cardInfos.set(1, new CardInfo(cardPhotoId[1], detailPhotoId[1], workouts));
 
-            MyPagerAdapter adapter = new MyPagerAdapter(this, cardInfos);
-            viewpager.setAdapter(adapter);
-            viewpager.setCurrentItem(curPage);
-        }
+        MyPagerAdapter adapter = new MyPagerAdapter(this, cardInfos);
+        viewpager.setAdapter(adapter);
+        viewpager.setCurrentItem(curPage);
+
     }
 
     @Override
