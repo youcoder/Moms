@@ -1,6 +1,5 @@
 package com.sodabodyfit.moms;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -8,19 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.sodabodyfit.moms.Adapter.MyWorkoutAdapter;
 import com.sodabodyfit.moms.Common.DividerItemDecoration;
-import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.Models.Exercise;
 import com.sodabodyfit.moms.Models.Workout;
 import com.sodabodyfit.moms.Provider.DBEngine;

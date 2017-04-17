@@ -50,6 +50,8 @@ public class LoginActivity extends AppCompatActivity{
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                etEmail.setText("oasis1984618@hotmail.com");
+//                etPassword.setText("oasis12345");
                 if (validate()) {
                     login();
                 }
@@ -87,6 +89,7 @@ public class LoginActivity extends AppCompatActivity{
 
         email = etEmail.getText().toString();
         password = etPassword.getText().toString();
+
 
         if (email.isEmpty()){
             etEmail.setError(getString(R.string.error_null_email));
