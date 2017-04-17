@@ -77,7 +77,6 @@
                 android:id="@+id/img_exercise"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:src="@drawable/boxing"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY" />
 

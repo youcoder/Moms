@@ -236,7 +236,7 @@
             android:id="@+id/img_play"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/play_icon" />
+            android:src="@drawable/ic_play" />
 
         <LinearLayout
             android:id="@+id/viewPagerCountDots"

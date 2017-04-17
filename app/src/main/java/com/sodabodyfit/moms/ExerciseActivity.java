@@ -8,16 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -375,12 +369,12 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     private  void startPlay() {
         m_isPlay = true;
         m_PlayHandler.postDelayed(m_PlayRunnable, PLAY_DELAY);
-        ivPlay.setImageResource(R.drawable.pause_icon);
+        ivPlay.setImageResource(R.drawable.ic_pause);
     }
     private void stopPlay() {
         m_isPlay = false;
         m_PlayHandler.removeCallbacks(m_PlayRunnable);
-        ivPlay.setImageResource(R.drawable.play_icon);
+        ivPlay.setImageResource(R.drawable.ic_play);
     }
 
     private void onClickPlay() {
