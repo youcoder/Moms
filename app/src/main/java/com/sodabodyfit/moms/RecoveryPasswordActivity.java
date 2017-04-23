@@ -44,6 +44,7 @@ public class RecoveryPasswordActivity extends AppCompatActivity {
 
         progress = new ProgressDialog(this);
         progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
 
         etEmail = (EditText)findViewById(R.id.edt_email);
     }

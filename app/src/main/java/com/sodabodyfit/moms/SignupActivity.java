@@ -2,9 +2,7 @@ package com.sodabodyfit.moms;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,11 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sodabodyfit.moms.Common.Constants;
-import com.sodabodyfit.moms.Interface.SignUp;
 import com.sodabodyfit.moms.Common.UserInfo;
+import com.sodabodyfit.moms.Interface.SignUp;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,6 +63,7 @@ public class SignupActivity extends AppCompatActivity implements ViewPager.OnPag
 
         progress = new ProgressDialog(this);
         progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
 
         setUiPageViewController();
     }

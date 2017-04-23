@@ -2,10 +2,10 @@ package com.sodabodyfit.moms;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,16 +24,13 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.gaurav.cdsrecyclerview.CdsItemTouchCallback;
 import com.gaurav.cdsrecyclerview.CdsRecyclerView;
 import com.gaurav.cdsrecyclerview.CdsRecyclerViewAdapter;
-import com.sodabodyfit.moms.Common.DividerItemDecoration;
 import com.sodabodyfit.moms.Common.ImageLoader;
 import com.sodabodyfit.moms.Models.Exercise;
 import com.sodabodyfit.moms.Models.Workout;
 import com.sodabodyfit.moms.Provider.DBEngine;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 public class EditMyWorkoutActivity extends AppCompatActivity {
 
